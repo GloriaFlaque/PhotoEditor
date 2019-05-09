@@ -13,6 +13,7 @@ import CoreImage
 
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     internal var filters:[Filters] = []
+    //internal var repository: LocalCompetitorRepository!
     var input: PHContentEditingInput?
     var imageOrientation: Int32?
     @IBOutlet weak var imageView: UIImageView!
@@ -23,6 +24,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var currentFilterName = ""
     var filterName = ""
     var parameterName: Array<Any> = []
+    let context = CIContext(options: nil)
     
     @IBAction func slider(_ sender: Any) {
         imageView.image = self.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [], name: filterName)
@@ -42,11 +44,20 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     func didDobleTap() {
         performSegue(withIdentifier: "showIntensity", sender: self)
     }*/
+    override func viewDidAppear(_ animated: Bool) {
+        let tabBar = tabBarController as! MainTabBarController
+        imageView.image = tabBar.realImage
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        let tabBar = tabBarController as! MainTabBarController
+        tabBar.realImage = imageView.image
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.image = realImage
+        let tabBar = tabBarController as! MainTabBarController
+        imageView.image = tabBar.realImage
         
         let sepia = Filters(currentFilter: "CISepiaTone", name: "Sepia", parameters: [0.5])
         let falseColor = Filters(currentFilter: "CIFalseColor", name: "FalseColor", parameters: [CIColor(red: 0, green: 0, blue: 0), CIColor(red: 1, green: 0, blue: 0.5)])
@@ -56,13 +67,11 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         filters.append(morphologyGradient)
         filters.append(falseColor)
         filters.append(zoomBlur)
-        
-        /*let doubleTapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(("didDoubleTapCollectionView:")))
-        doubleTapGesture.numberOfTapsRequired = 2
-        self.collectionView.addGestureRecognizer(doubleTapGesture)*/
-        
     }
     
+    /*func inputImageMaximumSize() -> CGSize {
+        return
+    }*/
     
     func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Array<Any>, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
@@ -72,21 +81,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let filter = CIFilter(name: currentFilter)!
         filter.setDefaults()
         filter.setValue(cimage, forKey: kCIInputImageKey)
-        
-        /*let inputKeys = filter.inputKeys
-         if inputKeys.contains(kCIInputIntensityKey) {
-            filter.setValue(intensity.value, forKey: kCIInputIntensityKey)
-        }
-        if inputKeys.contains(kCIInputRadiusKey) {
-            filter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)
-        }
-        if inputKeys.contains(kCIInputScaleKey) {
-            filter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)
-        }
-        if inputKeys.contains(kCIInputCenterKey) {
-            filter.setValue(CIVector(x: inputImage.size.width / 2, y: inputImage.size.height / 2), forKey: kCIInputCenterKey)
-        }*/
-        
+
         switch name {
         case "Sepia":
             filter.setValue(intensity.value, forKey: kCIInputIntensityKey)
@@ -106,9 +101,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         let ciFilteredImage = filter.outputImage
-        let context = CIContext(options: nil)
         let cgImage = context.createCGImage(ciFilteredImage!, from: ciFilteredImage!.extent)
-        
         let resultImage = UIImage(cgImage: cgImage!)
         
         return resultImage
@@ -133,9 +126,8 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         let cell: FilterCell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
         let filter = filters[indexPath.row]
-        //let image = realImage
         cell.filterName.text = filter.name
-        //cell.imageFilter.image = self.addFilter(inputImage: image!, orientation: nil, currentFilter: filter.name)
+        cell.imageFilter.image = self.addFilter(inputImage: realImage!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)
         return cell
     }
     /*func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -149,14 +141,6 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         parameterName = filters[indexPath.row].parameters
         filterName = filters[indexPath.row].name
         imageView.image = self.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
-        
-        
-        
-        /*let cell: FilterCell =
-            collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
-        if(cell.isSelected) {
-            performSegue(withIdentifier: "showIntensity", sender: self)
-        }*/
     }
     
     /*func didDoubleTapCollectionView(gesture: UITapGestureRecognizer) {

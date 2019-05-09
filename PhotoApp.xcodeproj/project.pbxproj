@@ -17,6 +17,7 @@
 		575741AB226E420800CB4D55 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AA226E420800CB4D55 /* Repository.swift */; };
 		575741AD226E430300CB4D55 /* LocalFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AC226E430300CB4D55 /* LocalFiltersRepository.swift */; };
 		575741AF226E460000CB4D55 /* LocalCustomFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AE226E460000CB4D55 /* LocalCustomFiltersRepository.swift */; };
+		576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */; };
 		5782174622318B3F0047B536 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782174522318B3F0047B536 /* AppDelegate.swift */; };
 		5782174822318B3F0047B536 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782174722318B3F0047B536 /* ViewController.swift */; };
 		5782174B22318B3F0047B536 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5782174922318B3F0047B536 /* Main.storyboard */; };
@@ -92,6 +93,7 @@
 		575741AA226E420800CB4D55 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		575741AC226E430300CB4D55 /* LocalFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFiltersRepository.swift; sourceTree = "<group>"; };
 		575741AE226E460000CB4D55 /* LocalCustomFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCustomFiltersRepository.swift; sourceTree = "<group>"; };
+		576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterCell.swift; sourceTree = "<group>"; };
 		5782174222318B3F0047B536 /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5782174522318B3F0047B536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5782174722318B3F0047B536 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				5757419E226C9ED000CB4D55 /* MainTabBarController.swift */,
 				575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */,
 				579E60D3227233E600AB1925 /* IntesityViewController.swift */,
+				576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */,
 			);
 			path = PhotoApp;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				57B4FF1B226A2AF500981207 /* SelectPhotoViewController.swift in Sources */,
 				575741A3226CDC3D00CB4D55 /* CustomFilters.swift in Sources */,
 				575741AB226E420800CB4D55 /* Repository.swift in Sources */,
+				576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */,
 				5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */,
 				575741A6226E288300CB4D55 /* FiltersEntity.swift in Sources */,
 				57B4FF192268BC3F00981207 /* FilterCell.swift in Sources */,
@@ -690,7 +694,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UJW7MH6X2M;
 				INFOPLIST_FILE = PhotoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -711,7 +715,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UJW7MH6X2M;
 				INFOPLIST_FILE = PhotoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

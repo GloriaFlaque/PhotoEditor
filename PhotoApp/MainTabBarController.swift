@@ -26,5 +26,4 @@ class MainTabBarController: UITabBarController {
             customFilterVC?.realImage = realImage
         }
     }
-
 }
