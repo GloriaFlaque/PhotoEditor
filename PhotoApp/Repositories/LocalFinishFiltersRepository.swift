@@ -1,21 +1,21 @@
 //
-//  LocalCustomFiltersRepository.swift
+//  LocalFinishFiltersRepository.swift
 //  PhotoApp
 //
-//  Created by Gloria on 22/4/19.
+//  Created by Gloria on 12/5/19.
 //  Copyright © 2019 Team Excelencia. All rights reserved.
 //
 
 import Foundation
 import RealmSwift
 
-class LocalCustomFiltersRepository: NSObject{
-    func getAll() -> [CustomFilters] {
-        var tasks : [CustomFilters] = []
+class LocalFinishFiltersRepository: NSObject {
+    func getAll() -> [FinishFilter] {
+        var tasks : [FinishFilter] = []
         do {
-            let entities = try Realm().objects(CustomFiltersEntity.self).sorted(byKeyPath: "id", ascending: true)
+            let entities = try Realm().objects(FinishFilterEntity.self).sorted(byKeyPath: "id", ascending: true)
             for entity in entities {
-                let model = entity.customFiltersModel()
+                let model = entity.finishFiltersModel()
                 tasks.append(model)
             }
         }
@@ -24,10 +24,10 @@ class LocalCustomFiltersRepository: NSObject{
         }
         return tasks
     }
-    func create(a: CustomFilters) -> Bool {
+    func create(a: FinishFilter) -> Bool {
         do {
             let realm = try Realm()
-            let entity = CustomFiltersEntity(id: a.id, date: a.date, filters: a.filters)
+            let entity = FinishFilterEntity(id: a.id, date: a.date, customFilters: a.customFilters)
             try realm.write {
                 realm.add(entity, update: true)
             }
@@ -37,11 +37,11 @@ class LocalCustomFiltersRepository: NSObject{
         }
         return true
     }
-    func delete(a: CustomFilters) -> Bool {
+    func delete(a: FinishFilter) -> Bool {
         do {
             let realm = try Realm()
             try realm.write {
-                let entitiyDelete = realm.objects(CustomFiltersEntity.self).filter("id == %@", a.id)
+                let entitiyDelete = realm.objects(FinishFilterEntity.self).filter("id == %@", a.id)
                 realm.delete(entitiyDelete)
             }
         }

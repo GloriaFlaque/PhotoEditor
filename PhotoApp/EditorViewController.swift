@@ -13,7 +13,6 @@ import CoreImage
 
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     internal var filters:[Filters] = []
-    //internal var repository: LocalCompetitorRepository!
     var input: PHContentEditingInput?
     var imageOrientation: Int32?
     @IBOutlet weak var imageView: UIImageView!
@@ -29,35 +28,39 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func slider(_ sender: Any) {
         imageView.image = self.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [], name: filterName)
     }
-    
-    /*var dableTapRecognizer: UITapGestureRecognizer {
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDobleTap))
-        tapRecognizer.numberOfTapsRequired = 2
-        return tapRecognizer
-    }
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       // .addGestureRecognizer(dableTapRecognizer)
+    @IBAction func finishButton(_ sender: Any) {
+        performSegue(withIdentifier: "showSave", sender: self)
     }
     
-    @objc
-    func didDobleTap() {
-        performSegue(withIdentifier: "showIntensity", sender: self)
-    }*/
-    override func viewDidAppear(_ animated: Bool) {
+    /*override func viewDidAppear(_ animated: Bool) {
         let tabBar = tabBarController as! MainTabBarController
         imageView.image = tabBar.realImage
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         let tabBar = tabBarController as! MainTabBarController
         tabBar.realImage = imageView.image
+    }*/
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let intensityVC = segue.destination as? IntesityViewController {
+            intensityVC.realImage = imageView.image
+            intensityVC.currentFilterName = currentFilterName
+            intensityVC.filterName = filterName
+            intensityVC.parameterName = parameterName
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tabBar = tabBarController as! MainTabBarController
-        imageView.image = tabBar.realImage
+        //let tabBar = tabBarController as? MainTabBarController
+          //  imageView.image = tabBar.realImage
+        
+        imageView.image = DataHolder.sharedInstance.realImage
+        realImage = DataHolder.sharedInstance.realImage
+        
+        //DataHolder.sharedInstance.realImage = imageView.image
         
         let sepia = Filters(currentFilter: "CISepiaTone", name: "Sepia", parameters: [0.5])
         let falseColor = Filters(currentFilter: "CIFalseColor", name: "FalseColor", parameters: [CIColor(red: 0, green: 0, blue: 0), CIColor(red: 1, green: 0, blue: 0.5)])
@@ -110,8 +113,12 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    func showIntensity() {
-        performSegue(withIdentifier: "showIntensity", sender: self)
+    func showIntensity(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let intensityVC = segue.destination as? IntesityViewController else { return }
+        intensityVC.realImage = imageView.image
+        intensityVC.currentFilterName = currentFilterName
+        intensityVC.filterName = filterName
+        intensityVC.parameterName = parameterName
     }
 }
 
@@ -141,14 +148,7 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         parameterName = filters[indexPath.row].parameters
         filterName = filters[indexPath.row].name
         imageView.image = self.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
-    }
-    
-    /*func didDoubleTapCollectionView(gesture: UITapGestureRecognizer) {
-        let pointInCollectionView: CGPoint = gesture.location(in: self.collectionView)
-        let selectedIndexPath: NSIndexPath = self.collectionView.indexPathForItem(at: pointInCollectionView)! as NSIndexPath
-        let selectedCell: UICollectionViewCell = self.collectionView.cellForItem(at: selectedIndexPath as IndexPath)!
-        navigationController?.pushViewController(selectedCell, animated: true)
+       
         performSegue(withIdentifier: "showIntensity", sender: self)
-    }*/
-    
+    }
 }

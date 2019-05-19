@@ -28,12 +28,12 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         AlertService.showAlert(style: .actionSheet, title: nil, message: nil, actions: [photoLibrary, camera, cancel], completion: nil)
-       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let mainTBC = segue.destination as! MainTabBarController
         mainTBC.realImage = imageView.image
+        DataHolder.sharedInstance.realImage = imageView.image
     }
     
     override func viewDidLoad() {

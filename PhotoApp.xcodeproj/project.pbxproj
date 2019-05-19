@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		57232C8D22397CFA00938B06 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57232C8C22397CFA00938B06 /* GoogleService-Info.plist */; };
 		5753D8462252998F00039CD9 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5753D8452252998F00039CD9 /* AlertService.swift */; };
+		575571522289EF0E00F04310 /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575571512289EF0E00F04310 /* SaveViewController.swift */; };
 		5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757419E226C9ED000CB4D55 /* MainTabBarController.swift */; };
 		575741A1226CAD6000CB4D55 /* CustomFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */; };
 		575741A3226CDC3D00CB4D55 /* CustomFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741A2226CDC3D00CB4D55 /* CustomFilters.swift */; };
@@ -17,7 +18,11 @@
 		575741AB226E420800CB4D55 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AA226E420800CB4D55 /* Repository.swift */; };
 		575741AD226E430300CB4D55 /* LocalFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AC226E430300CB4D55 /* LocalFiltersRepository.swift */; };
 		575741AF226E460000CB4D55 /* LocalCustomFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741AE226E460000CB4D55 /* LocalCustomFiltersRepository.swift */; };
+		5757B7A62288A332004A2DFB /* FinishFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757B7A52288A332004A2DFB /* FinishFilter.swift */; };
+		5757B7A82288A3D9004A2DFB /* FinishFilterEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757B7A72288A3D9004A2DFB /* FinishFilterEntity.swift */; };
+		5757B7AA2288AA9D004A2DFB /* LocalFinishFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757B7A92288AA9D004A2DFB /* LocalFinishFiltersRepository.swift */; };
 		576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */; };
+		57796A242285E888008082F6 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57796A232285E888008082F6 /* DataHolder.swift */; };
 		5782174622318B3F0047B536 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782174522318B3F0047B536 /* AppDelegate.swift */; };
 		5782174822318B3F0047B536 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782174722318B3F0047B536 /* ViewController.swift */; };
 		5782174B22318B3F0047B536 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5782174922318B3F0047B536 /* Main.storyboard */; };
@@ -85,6 +90,7 @@
 /* Begin PBXFileReference section */
 		57232C8C22397CFA00938B06 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5753D8452252998F00039CD9 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		575571512289EF0E00F04310 /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 		5757419E226C9ED000CB4D55 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterViewController.swift; sourceTree = "<group>"; };
 		575741A2226CDC3D00CB4D55 /* CustomFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilters.swift; sourceTree = "<group>"; };
@@ -93,7 +99,11 @@
 		575741AA226E420800CB4D55 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		575741AC226E430300CB4D55 /* LocalFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFiltersRepository.swift; sourceTree = "<group>"; };
 		575741AE226E460000CB4D55 /* LocalCustomFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCustomFiltersRepository.swift; sourceTree = "<group>"; };
+		5757B7A52288A332004A2DFB /* FinishFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishFilter.swift; sourceTree = "<group>"; };
+		5757B7A72288A3D9004A2DFB /* FinishFilterEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishFilterEntity.swift; sourceTree = "<group>"; };
+		5757B7A92288AA9D004A2DFB /* LocalFinishFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFinishFiltersRepository.swift; sourceTree = "<group>"; };
 		576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterCell.swift; sourceTree = "<group>"; };
+		57796A232285E888008082F6 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		5782174222318B3F0047B536 /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5782174522318B3F0047B536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5782174722318B3F0047B536 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +174,7 @@
 			children = (
 				575741A5226E288300CB4D55 /* FiltersEntity.swift */,
 				575741A7226E28BD00CB4D55 /* CustomFiltersEntity.swift */,
+				5757B7A72288A3D9004A2DFB /* FinishFilterEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -174,6 +185,7 @@
 				575741AA226E420800CB4D55 /* Repository.swift */,
 				575741AC226E430300CB4D55 /* LocalFiltersRepository.swift */,
 				575741AE226E460000CB4D55 /* LocalCustomFiltersRepository.swift */,
+				5757B7A92288AA9D004A2DFB /* LocalFinishFiltersRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -221,6 +233,8 @@
 				575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */,
 				579E60D3227233E600AB1925 /* IntesityViewController.swift */,
 				576402BF227F5DEE00C8C1B3 /* CustomFilterCell.swift */,
+				57796A232285E888008082F6 /* DataHolder.swift */,
+				575571512289EF0E00F04310 /* SaveViewController.swift */,
 			);
 			path = PhotoApp;
 			sourceTree = "<group>";
@@ -250,6 +264,7 @@
 			children = (
 				578E5B602263957B00F929F6 /* Filters.swift */,
 				575741A2226CDC3D00CB4D55 /* CustomFilters.swift */,
+				5757B7A52288A332004A2DFB /* FinishFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -491,7 +506,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5782174822318B3F0047B536 /* ViewController.swift in Sources */,
+				57796A242285E888008082F6 /* DataHolder.swift in Sources */,
 				57B4FF1B226A2AF500981207 /* SelectPhotoViewController.swift in Sources */,
+				575571522289EF0E00F04310 /* SaveViewController.swift in Sources */,
 				575741A3226CDC3D00CB4D55 /* CustomFilters.swift in Sources */,
 				575741AB226E420800CB4D55 /* Repository.swift in Sources */,
 				576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */,
@@ -500,11 +517,14 @@
 				57B4FF192268BC3F00981207 /* FilterCell.swift in Sources */,
 				578E5B612263957B00F929F6 /* Filters.swift in Sources */,
 				579EA96D22495A9C001A2261 /* EditorViewController.swift in Sources */,
+				5757B7A82288A3D9004A2DFB /* FinishFilterEntity.swift in Sources */,
 				575741AF226E460000CB4D55 /* LocalCustomFiltersRepository.swift in Sources */,
 				5753D8462252998F00039CD9 /* AlertService.swift in Sources */,
+				5757B7A62288A332004A2DFB /* FinishFilter.swift in Sources */,
 				575741A8226E28BD00CB4D55 /* CustomFiltersEntity.swift in Sources */,
 				5782174622318B3F0047B536 /* AppDelegate.swift in Sources */,
 				575741A1226CAD6000CB4D55 /* CustomFilterViewController.swift in Sources */,
+				5757B7AA2288AA9D004A2DFB /* LocalFinishFiltersRepository.swift in Sources */,
 				575741AD226E430300CB4D55 /* LocalFiltersRepository.swift in Sources */,
 				579E60D4227233E600AB1925 /* IntesityViewController.swift in Sources */,
 			);
@@ -694,7 +714,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UJW7MH6X2M;
 				INFOPLIST_FILE = PhotoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -715,7 +735,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UJW7MH6X2M;
 				INFOPLIST_FILE = PhotoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
