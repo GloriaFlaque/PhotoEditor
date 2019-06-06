@@ -37,12 +37,11 @@ class LocalCustomFiltersRepository: NSObject{
         }
         return true
     }
-    func delete(a: CustomFilters) -> Bool {
+    func delete() -> Bool {
         do {
             let realm = try Realm()
             try realm.write {
-                let entitiyDelete = realm.objects(CustomFiltersEntity.self).filter("id == %@", a.id)
-                realm.delete(entitiyDelete)
+                realm.deleteAll()
             }
         }
         catch{

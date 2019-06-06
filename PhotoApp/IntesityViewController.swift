@@ -17,6 +17,7 @@ import RealmSwift
 class IntesityViewController: UIViewController, DataHolderDelegate {
     internal var customFilter:[CustomFilters] = []
     internal var repository: LocalCustomFiltersRepository!
+    internal var filterrepository: LocalFiltersRepository!
     //weak var delegate: IntesityViewControllerDelegate?
     @IBOutlet var addButton: UIButton?
     var currentFilterName = ""
@@ -24,9 +25,13 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     var parameterName: Array<Any> = []
     var realImage: UIImage?
     @IBOutlet var intensity:UISlider!
+    var value: Float?
+    var paramer: Array<Any> = []
     
     @IBAction func slider(_ sender: Any) {
-        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [intensity!.value], name: filterName)
+        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [Double(intensity!.value)], name: filterName)
+        //imageView.image = UIImage(ciImage:filterApply!)
+        //filter = Filters(currentFilter: currentFilterName, name: filterName, parameters: [intensity!.value])
     }
     @IBOutlet weak var imageView: UIImageView!
     
@@ -34,11 +39,15 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
         self.performSegue(withIdentifier: "showMEdit", sender: self)
     }
     @IBAction func addButton(_ sender: Any) {
+       // DataHolder.sharedInstance.parameters2 = [Double(intensity!.value)]
         let filter = Filters(currentFilter: currentFilterName, name: filterName, parameters: [intensity!.value])
-        let customFilters = CustomFilters(id: UUID().uuidString, filters: [filter], date: Date())
-        self.repository.create(a: customFilters)
-        //self.performSegue(withIdentifier: "showMEdit", sender: self)
-        print(repository.getAll())
+        DataHolder.sharedInstance.filters = [filter]
+        filterrepository.create(a: filter)
+        DataHolder.sharedInstance.realImage = imageView.image
+        self.performSegue(withIdentifier: "showMEdit", sender: self)
+        print("sbdnckdbvkjdbvkjbdkvjbdkfbvkdjbvkdjfbvkjdfbvkdjbfkvjbdfkjbvkdjfbvkjdfbvkdjfbvkjdfbvkjbkdkjfbvkdjfbvkdjfbvkdjfbvkdjfbvkdjfbdkv jbfkdfjbvkjdfbvkdjbfvkjdbfkjbkdjfbgjfjhf")
+        print(DataHolder.sharedInstance.filters)
+        print(intensity!.value)
     }
     
     convenience init(filter: String){
@@ -57,6 +66,7 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
         super.viewDidLoad()
         imageView.image = realImage
         repository = LocalCustomFiltersRepository()
+        filterrepository = LocalFiltersRepository()
     }
 
 }

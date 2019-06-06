@@ -13,7 +13,7 @@ class LocalFinishFiltersRepository: NSObject {
     func getAll() -> [FinishFilter] {
         var tasks : [FinishFilter] = []
         do {
-            let entities = try Realm().objects(FinishFilterEntity.self).sorted(byKeyPath: "id", ascending: true)
+            let entities = try Realm().objects(FinishFilterEntity.self).sorted(byKeyPath: "date", ascending: true)
             for entity in entities {
                 let model = entity.finishFiltersModel()
                 tasks.append(model)
@@ -27,12 +27,13 @@ class LocalFinishFiltersRepository: NSObject {
     func create(a: FinishFilter) -> Bool {
         do {
             let realm = try Realm()
-            let entity = FinishFilterEntity(id: a.id, date: a.date, customFilters: a.customFilters)
+            let entity = FinishFilterEntity(id: a.id, date: a.date, filters: a.filters)
             try realm.write {
                 realm.add(entity, update: true)
             }
         }
         catch {
+            print("vbnvbnvbnvbnvbnvbnvbnvbnvbnvbnvnfghfghfghfghfghfghhutfdtjydyjtdytdytdtdytdytdytdytdyjtytdjydytdjydjyddjytdjytdjdjyd")
             return false
         }
         return true
@@ -43,6 +44,19 @@ class LocalFinishFiltersRepository: NSObject {
             try realm.write {
                 let entitiyDelete = realm.objects(FinishFilterEntity.self).filter("id == %@", a.id)
                 realm.delete(entitiyDelete)
+            }
+        }
+        catch{
+            return false
+        }
+        return true
+    }
+    
+    func deleteAll() -> Bool {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.deleteAll()
             }
         }
         catch{

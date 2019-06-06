@@ -127,11 +127,6 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
-  - Realm (3.13.1):
-    - Realm/Headers (= 3.13.1)
-  - Realm/Headers (3.13.1)
-  - RealmSwift (3.13.1):
-    - Realm (= 3.13.1)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -141,7 +136,6 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - FirebaseUI/Auth
-  - RealmSwift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -166,8 +160,6 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
-    - Realm
-    - RealmSwift
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
@@ -191,9 +183,7 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
-  RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
 
-PODFILE CHECKSUM: cb6f4dd0ac37bd9fd6f7acf055f39e3185513747
+PODFILE CHECKSUM: 57895ff31c0b7eef5e5ae3b0dd3759952e0a6358
 
 COCOAPODS: 1.5.0

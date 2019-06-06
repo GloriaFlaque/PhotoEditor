@@ -38,4 +38,29 @@ class LocalFiltersRepository: NSObject{
         }
         return true
     }
+    func create(a: Filters) -> Bool {
+        do {
+            let realm = try Realm()
+            let entity = FiltersEntity(filters: a)
+            try realm.write {
+                realm.add(entity, update: true)
+            }
+        }
+        catch {
+            return false
+        }
+        return true
+    }
+    func deleteAll() -> Bool {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.deleteAll()
+            }
+        }
+        catch{
+            return false
+        }
+        return true
+    }
 }

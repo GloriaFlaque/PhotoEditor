@@ -11,11 +11,16 @@ import UIKit
 class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     var realImage: UIImage?
+    internal var filterrepository: LocalFiltersRepository!
+    internal var repository: LocalFinishFiltersRepository!
     
     @IBAction func next(_ sender: Any) {
         if imageView.image == realImage {
             performSegue(withIdentifier: "photoSelected", sender: self)
         }
+        DataHolder.sharedInstance.filters = []
+        filterrepository.deleteAll()
+        repository.deleteAll()
     }
     
     @IBAction func selectPhoto(_ sender: Any) {
@@ -34,10 +39,13 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         let mainTBC = segue.destination as! MainTabBarController
         mainTBC.realImage = imageView.image
         DataHolder.sharedInstance.realImage = imageView.image
+        DataHolder.sharedInstance.realImage2 = imageView.image
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        filterrepository = LocalFiltersRepository()
+        repository = LocalFinishFiltersRepository()
     }
     
     func showImagePickerController(SourceType: UIImagePickerController.SourceType){

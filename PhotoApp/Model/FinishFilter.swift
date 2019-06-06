@@ -9,12 +9,13 @@
 import Foundation
 class FinishFilter {
     var id: String!
-    var customFilters: [CustomFilters] = []
+    //var customFilters: [CustomFilters] = []
+    var filters: [Filters] = []
     var date: Date!
     
-    init(id: String, customFilters: [CustomFilters], date: Date) {
+    init(id: String, filters: [Filters], date: Date) {
         self.id = id
-        self.customFilters = customFilters
+        self.filters = filters
         self.date = date
     }
 }

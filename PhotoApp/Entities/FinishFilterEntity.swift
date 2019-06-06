@@ -11,27 +11,35 @@ import RealmSwift
 
 class FinishFilterEntity: Object {
     @objc dynamic var id = ""
-    var customFilters: List <CustomFiltersEntity> = List <CustomFiltersEntity>()
+    //var customFilters: List <CustomFiltersEntity> = List <CustomFiltersEntity>()
+    var filters: List <FiltersEntity> = List <FiltersEntity>()
     @objc dynamic var date = Date()
     override static func primaryKey() -> String?{
         return "id"
     }
     
-    convenience init(id: String, date: Date, customFilters:[CustomFilters]) {
+    convenience init(id: String, date: Date, filters:[Filters]) {
         self.init()
         self.id = id
         self.date = date
-        for customFilters in customFilters{
-            self.customFilters.append(CustomFiltersEntity(value: customFilters))
+        for filter in filters{
+            self.filters.append(FiltersEntity(filters: filter))
         }
+        /*for customFilters in customFilters{
+            self.customFilters.append(CustomFiltersEntity(value: customFilters))
+        }*/
     }
     
     func finishFiltersModel() -> FinishFilter{
-        var customFiltersArray: [CustomFilters] = []
+        /*var customFiltersArray: [CustomFilters] = []
         for customFilters in customFilters{
             customFiltersArray.append(customFilters.customFiltersModel())
+        }*/
+        var filtersArray: [Filters] = []
+        for filter in filters{
+            filtersArray.append(filter.filtersModel())
         }
-        let model = FinishFilter(id: self.id, customFilters: customFiltersArray, date: self.date)
+        let model = FinishFilter(id: self.id, filters: filtersArray, date: self.date)
         return model
     }
 }

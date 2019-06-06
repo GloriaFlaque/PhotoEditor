@@ -13,12 +13,14 @@ import CoreImage
 
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     internal var filters:[Filters] = []
+    internal var repository: LocalFinishFiltersRepository!
     var input: PHContentEditingInput?
     var imageOrientation: Int32?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var intensity:UISlider!
     var realImage: UIImage?
+    var realImage2: UIImage?
     var inputIntensity = 0.5
     var currentFilterName = ""
     var filterName = ""
@@ -26,10 +28,19 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     let context = CIContext(options: nil)
     
     @IBAction func slider(_ sender: Any) {
-        imageView.image = self.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [], name: filterName)
+        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [intensity!.value], name: filterName)
+        //imageView.image = UIImage(ciImage:filterApply!)
     }
     @IBAction func finishButton(_ sender: Any) {
         performSegue(withIdentifier: "showSave", sender: self)
+    }
+    @IBAction func cancelButton(_ sender: Any) {
+        self.repository.deleteAll()
+        DataHolder.sharedInstance.filters = []
+        performSegue(withIdentifier: "showSelec", sender: self)
+        print("dfgdfgdfgdsfjvbkjfbkjdbvjkbvkjbdfvkjdbkjvdkjvbkdfjbvkdjbvkdjfbvkjdfbvkjfbvjkdbvkjbkjrbkjvbkjbkdbvkdjbfkvjdfbvkjdfbkjdfbvkjdfbvkjdfbvkjfbkvjdbvkdfbvkjdfbvkdjfbvkdbvfgsdfdfgdf")
+        print(repository.getAll())
+        print(DataHolder.sharedInstance.filters)
     }
     
     /*override func viewDidAppear(_ animated: Bool) {
@@ -53,30 +64,32 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        repository = LocalFinishFiltersRepository()
         
         //let tabBar = tabBarController as? MainTabBarController
           //  imageView.image = tabBar.realImage
         
         imageView.image = DataHolder.sharedInstance.realImage
         realImage = DataHolder.sharedInstance.realImage
+        realImage2 = DataHolder.sharedInstance.realImage2
         
         //DataHolder.sharedInstance.realImage = imageView.image
         
         let sepia = Filters(currentFilter: "CISepiaTone", name: "Sepia", parameters: [0.5])
-        let falseColor = Filters(currentFilter: "CIFalseColor", name: "FalseColor", parameters: [CIColor(red: 0, green: 0, blue: 0), CIColor(red: 1, green: 0, blue: 0.5)])
-        let zoomBlur = Filters(currentFilter: "CIZoomBlur", name: "ZoomBlur", parameters: [30, CIVector(x: 200, y: 200)])
+        //let falseColor = Filters(currentFilter: "CIFalseColor", name: "FalseColor", parameters: [CIColor(red: 0, green: 0, blue: 0), CIColor(red: 1, green: 0, blue: 0.5)])
+       // let zoomBlur = Filters(currentFilter: "CIZoomBlur", name: "ZoomBlur", parameters: [30, CIVector(x: 200, y: 200)])
         let morphologyGradient = Filters(currentFilter: "CIMorphologyGradient", name: "MorphologyGradient", parameters: [2])
         filters.append(sepia)
         filters.append(morphologyGradient)
-        filters.append(falseColor)
-        filters.append(zoomBlur)
+        //filters.append(falseColor)
+        //filters.append(zoomBlur)
     }
     
     /*func inputImageMaximumSize() -> CGSize {
         return
     }*/
     
-    func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Array<Any>, name: String) -> UIImage? {
+    /*func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Array<Any>, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
         if orientation != nil {
             cimage = cimage?.oriented(forExifOrientation: orientation!)
@@ -108,7 +121,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let resultImage = UIImage(cgImage: cgImage!)
         
         return resultImage
-    }
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -134,7 +147,7 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
         let filter = filters[indexPath.row]
         cell.filterName.text = filter.name
-        cell.imageFilter.image = self.addFilter(inputImage: realImage!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)
+        /*cell.imageFilter.image = self.addFilter(inputImage: realImage2!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)*/
         return cell
     }
     /*func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -147,7 +160,10 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         currentFilterName = filters[indexPath.row].currentFilter
         parameterName = filters[indexPath.row].parameters
         filterName = filters[indexPath.row].name
-        imageView.image = self.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
+        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
+        //imageView.image = UIImage(ciImage:filterApply!)
+        //let sepia = Filters(currentFilter: "CISepiaTone", name: "Sepia", parameters: [0.5])
+        //DataHolder.sharedInstance.filters = [sepia]
        
         performSegue(withIdentifier: "showIntensity", sender: self)
     }
