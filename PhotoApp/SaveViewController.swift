@@ -10,7 +10,6 @@ import UIKit
 
 class SaveViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
-    var realImage: UIImage?
     
     @IBAction func cancelButton(_ sender: Any) {
         performSegue(withIdentifier: "yy", sender: self)
@@ -24,12 +23,11 @@ class SaveViewController: UIViewController {
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true,completion: nil)
-        self.performSegue(withIdentifier: "showSelect", sender: self)
+        performSegue(withIdentifier: "showSelect", sender: self)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = DataHolder.sharedInstance.realImage
-        realImage = DataHolder.sharedInstance.realImage
     }
 
 }

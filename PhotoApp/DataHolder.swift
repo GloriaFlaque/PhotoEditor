@@ -18,13 +18,14 @@ class DataHolder: NSObject {
     //var customFilter: [CustomFilters] = []
     var filters: [Filters] = []
     var parameters: [Double] = []
-    var parameters2: [Parameters] = []
+    var parameters2: [Any] = []
+    var x: Int?
     
     
     let context = CIContext(options: nil)
     
     
-    func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Array<Any>, name: String) -> UIImage? {
+    func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Double, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
         if orientation != nil {
             cimage = cimage?.oriented(forExifOrientation: orientation!)
@@ -36,7 +37,7 @@ class DataHolder: NSObject {
             outputImage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
-                    kCIInputIntensityKey: parameters[0]
+                    kCIInputIntensityKey: parameters
                 ])
             /*case "CIColorClamp":
              filter.setValue(parameters[0], forKey: "inputMaxComponents")
@@ -46,22 +47,42 @@ class DataHolder: NSObject {
                 "CIFalseColor",
                 parameters: [
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
-                    "inputColor1": CIColor(red: parameters[0] as! CGFloat, green: parameters[0] as! CGFloat, blue: parameters[0] as! CGFloat)
+                    "inputColor1": CIColor(red: parameters as! CGFloat, green: parameters as! CGFloat, blue: parameters as! CGFloat)
                 ])
         case "ZoomBlur":
             outputImage = cimage!.applyingFilter(
                 "CIZoomBlur",
                 parameters: [
-                    "inputAmount": parameters[0],
-                    "inputCenter": parameters[1]
+                    "inputAmount": parameters,
+                    "inputCenter": parameters
                 ])
         case "MorphologyGradient":
             outputImage = cimage!.applyingFilter(
                 "CIMorphologyGradient",
                 parameters: [
-                    "inputRadius": parameters[0]
+                    "inputRadius": parameters * 2
                 ])
-        // case "CIColorControls":
+         case "vignette":
+            outputImage = cimage!.applyingFilter(
+                "CIVignette",
+                parameters: [
+                    "inputIntensity": parameters,
+                    "inputRadius": parameters * 2
+                ])
+        case "CIGammaAdjust":
+            outputImage = cimage!.applyingFilter(
+                "CIGammaAdjust",
+                parameters: [
+                    "inputPower": parameters * 3
+                ])
+        case "Brightness":
+            outputImage = cimage!.applyingFilter(
+                "CIColorControls",
+                parameters: [
+                    "inputBrightness": parameters,
+                    "inputContrast": 1,
+                    "inputSaturation": 1
+                ])
         default: break
         }
         let ciFilteredImage = outputImage
@@ -81,18 +102,18 @@ class DataHolder: NSObject {
         filter.setDefaults()
         filter.setValue(cimage, forKey: kCIInputImageKey)*/
         
+        x = 0
         for i in customFilter {
             //let currentFilter = i.currentFilter
+            x = +1
             let parameters = i.parameters
             let name = i.name
         switch name {
         case "Sepia":
-            print("efesdfgsdfgsdfgdsfgdfghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-            //print(parameters[0])
             outputImage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
-                    kCIInputIntensityKey: parameters[0]
+                    kCIInputIntensityKey: parameters!
                 ])
         /*case "CIColorClamp":
             filter.setValue(parameters[0], forKey: "inputMaxComponents")
@@ -102,22 +123,42 @@ class DataHolder: NSObject {
                 "CIFalseColor",
                 parameters: [
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
-                    "inputColor1": CIColor(red: parameters[0] as! CGFloat, green: parameters[0] as! CGFloat, blue: parameters[0] as! CGFloat)
+                    "inputColor1": CIColor(red: CGFloat(parameters!) , green: parameters! as! CGFloat, blue: parameters! as! CGFloat)
                 ])
         case "ZoomBlur":
             outputImage = cimage!.applyingFilter(
                 "CIZoomBlur",
                 parameters: [
-                    "inputAmount": parameters[0],
-                    "inputCenter": parameters[1]
+                    "inputAmount": parameters!,
+                    "inputCenter": parameters!
                 ])
         case "MorphologyGradient":
             outputImage = cimage!.applyingFilter(
                 "CIMorphologyGradient",
                 parameters: [
-                    "inputRadius": parameters[0]
+                    "inputRadius": parameters! * 2
                 ])
-        // case "CIColorControls":
+        case "vignette":
+            outputImage = cimage!.applyingFilter(
+                "CIVignette",
+                parameters: [
+                    "inputIntensity": parameters!,
+                    "inputRadius": parameters! * 2
+                ])
+        case "CIGammaAdjust":
+            outputImage = cimage!.applyingFilter(
+                "CIGammaAdjust",
+                parameters: [
+                    "inputPower": parameters! * 3
+                ])
+        case "Brightness":
+            outputImage = cimage!.applyingFilter(
+                "CIColorControls",
+                parameters: [
+                    "inputBrightness": parameters!,
+                    "inputContrast": 0.0,
+                    "inputSaturation": 0.0
+                ])
         default: break
         }
         }

@@ -10,9 +10,9 @@ import Foundation
 class Filters {
     var currentFilter: String!
     var name: String!
-    var parameters: [Any] = []
+    var parameters: Double!
     
-    init(currentFilter: String,name: String, parameters: [Any]) {
+    init(currentFilter: String,name: String, parameters: Double) {
     self.currentFilter = currentFilter
       self.name = name
       self.parameters = parameters

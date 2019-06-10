@@ -13,7 +13,7 @@ class LocalFinishFiltersRepository: NSObject {
     func getAll() -> [FinishFilter] {
         var tasks : [FinishFilter] = []
         do {
-            let entities = try Realm().objects(FinishFilterEntity.self).sorted(byKeyPath: "date", ascending: true)
+            let entities = try Realm().objects(FinishFilterEntity.self).sorted(byKeyPath: "date", ascending: false)
             for entity in entities {
                 let model = entity.finishFiltersModel()
                 tasks.append(model)
@@ -42,7 +42,7 @@ class LocalFinishFiltersRepository: NSObject {
         do {
             let realm = try Realm()
             try realm.write {
-                let entitiyDelete = realm.objects(FinishFilterEntity.self).filter("id == %@", a.id)
+                let entitiyDelete = realm.objects(FinishFilterEntity.self).filter("date == %@", a.date)
                 realm.delete(entitiyDelete)
             }
         }

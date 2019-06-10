@@ -11,7 +11,6 @@ import RealmSwift
 
 class FinishFilterEntity: Object {
     @objc dynamic var id = ""
-    //var customFilters: List <CustomFiltersEntity> = List <CustomFiltersEntity>()
     var filters: List <FiltersEntity> = List <FiltersEntity>()
     @objc dynamic var date = Date()
     override static func primaryKey() -> String?{

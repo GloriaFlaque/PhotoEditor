@@ -22,14 +22,13 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     @IBOutlet var addButton: UIButton?
     var currentFilterName = ""
     var filterName = ""
-    var parameterName: Array<Any> = []
+    var parameterName: Any!
     var realImage: UIImage?
     @IBOutlet var intensity:UISlider!
     var value: Float?
-    var paramer: Array<Any> = []
     
     @IBAction func slider(_ sender: Any) {
-        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: [Double(intensity!.value)], name: filterName)
+        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: nil, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
         //imageView.image = UIImage(ciImage:filterApply!)
         //filter = Filters(currentFilter: currentFilterName, name: filterName, parameters: [intensity!.value])
     }
@@ -39,15 +38,18 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
         self.performSegue(withIdentifier: "showMEdit", sender: self)
     }
     @IBAction func addButton(_ sender: Any) {
-       // DataHolder.sharedInstance.parameters2 = [Double(intensity!.value)]
-        let filter = Filters(currentFilter: currentFilterName, name: filterName, parameters: [intensity!.value])
-        DataHolder.sharedInstance.filters = [filter]
+        //let paramer = Parameters(parameter: [Double(intensity!.value)])
+        DataHolder.sharedInstance.parameters2 = [intensity!.value]
+        let filter = Filters(currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value))
+        DataHolder.sharedInstance.filters.append(filter)
         filterrepository.create(a: filter)
         DataHolder.sharedInstance.realImage = imageView.image
         self.performSegue(withIdentifier: "showMEdit", sender: self)
         print("sbdnckdbvkjdbvkjbdkvjbdkfbvkdjbvkdjfbvkjdfbvkdjbfkvjbdfkjbvkdjfbvkjdfbvkdjfbvkjdfbvkjbkdkjfbvkdjfbvkdjfbvkdjfbvkdjfbvkdjfbdkv jbfkdfjbvkjdfbvkdjbfvkjdbfkjbkdjfbgjfjhf")
         print(DataHolder.sharedInstance.filters)
         print(intensity!.value)
+        print(filter.name)
+        print(filter.parameters)
     }
     
     convenience init(filter: String){
