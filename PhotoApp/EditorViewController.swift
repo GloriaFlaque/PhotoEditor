@@ -23,14 +23,13 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var inputIntensity = 0.5
     var currentFilterName = ""
     var filterName = ""
-    var parameterName: Any!
     let context = CIContext(options: nil)
     
     @IBAction func finishButton(_ sender: Any) {
         performSegue(withIdentifier: "showSave", sender: self)
     }
     @IBAction func cancelButton(_ sender: Any) {
-        self.repository.deleteAll()
+        //self.repository.deleteAll()
         DataHolder.sharedInstance.filters = []
         performSegue(withIdentifier: "showSelec", sender: self)
     }
@@ -40,7 +39,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             intensityVC.realImage = imageView.image
             intensityVC.currentFilterName = currentFilterName
             intensityVC.filterName = filterName
-            intensityVC.parameterName = parameterName
         }
     }
     
@@ -76,7 +74,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         intensityVC.realImage = imageView.image
         intensityVC.currentFilterName = currentFilterName
         intensityVC.filterName = filterName
-        intensityVC.parameterName = parameterName
     }
 }
 
@@ -98,7 +95,6 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let image = realImage
         currentFilterName = filters[indexPath.row].currentFilter
-        parameterName = filters[indexPath.row].parameters
         filterName = filters[indexPath.row].name
         imageView.image = DataHolder.sharedInstance.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
         performSegue(withIdentifier: "showIntensity", sender: self)

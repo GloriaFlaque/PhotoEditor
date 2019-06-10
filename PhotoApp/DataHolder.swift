@@ -15,7 +15,6 @@ class DataHolder: NSObject {
     static let sharedInstance:DataHolder = DataHolder()
     var realImage: UIImage?
     var realImage2: UIImage?
-    //var customFilter: [CustomFilters] = []
     var filters: [Filters] = []
     var parameters: [Double] = []
     var parameters2: [Any] = []

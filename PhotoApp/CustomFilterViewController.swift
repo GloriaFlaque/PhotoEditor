@@ -31,7 +31,7 @@ class CustomFilterViewController: UIViewController {
     }
     
     @IBAction func cancelButton(_ sender: Any) {
-        self.repository.deleteAll()
+        //self.repository.deleteAll()
         DataHolder.sharedInstance.filters.removeAll()
         performSegue(withIdentifier: "showSelec", sender: self)
     }
@@ -55,10 +55,9 @@ class CustomFilterViewController: UIViewController {
         super.viewDidLoad()
         repository = LocalFinishFiltersRepository()
         filterrepository = LocalFiltersRepository()
-        finishFilters = repository.getAll()
+        //finishFilters = repository.getAll()
         
         imageView.image = DataHolder.sharedInstance.realImage
-        //DataHolder.sharedInstance.realImage = imageView.image
         realImage = DataHolder.sharedInstance.realImage
     }
 }
@@ -66,17 +65,10 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return finishFilters.count
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-   /* func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: CustomFilterCell =
-            collectionView.dequeueReusableCell(withReuseIdentifier: "customFilterCell", for: indexPath) as! CustomFilterCell
-        let finishFilters = finishFilters[indexPath.row]
-        cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters.filters)
-        return cell
-    }*/
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = UICollectionViewCell()
@@ -89,14 +81,24 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
      collectionView.dequeueReusableCell(withReuseIdentifier: "customFilterCell", for: indexPath) as! CustomFilterCell
      let finishFilters2 = finishFilters[indexPath.row]
      cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
-        //collectionView.deleteItems(at: [indexPath])
      return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         finishFilters2 = finishFilters[indexPath.row]
         count = finishFilters2.date
-        imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
-        DataHolder.sharedInstance.realImage = imageView.image
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.blue.cgColor
+        cell?.layer.borderWidth = 1.5
+        cell?.isSelected = true
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.realImage2
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
+        imageView.image = DataHolder.sharedInstance.realImage
+    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.clear.cgColor
+        cell?.layer.borderWidth = 1.5
+        cell?.isSelected = true
     }
 }
