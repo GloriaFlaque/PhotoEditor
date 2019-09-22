@@ -13,7 +13,7 @@ class LocalFiltersRepository: NSObject{
     func getAll() -> [Filters] {
         var tasks : [Filters] = []
         do {
-            let entities = try Realm().objects(FiltersEntity.self).sorted(byKeyPath: "name", ascending: true)
+            let entities = try Realm().objects(FiltersEntity.self).sorted(byKeyPath: "id", ascending: true)
             for entity in entities {
                 let model = entity.filtersModel()
                 tasks.append(model)

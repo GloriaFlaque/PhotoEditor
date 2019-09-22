@@ -10,16 +10,18 @@ import Foundation
 import RealmSwift
 
 class FiltersEntity: Object {
+    @objc dynamic var id = ""
     @objc dynamic var currentFilter = ""
     @objc dynamic var name = ""
     @objc dynamic var parameters: Double = 0.0
     //var parameters: [Any] = []
     
     override static func primaryKey() -> String?{
-        return "currentFilter"
+        return "id"
     }
     convenience init(filters: Filters) {
         self.init()
+        self.id = filters.id
         self.currentFilter = filters.currentFilter
         self.name = filters.name
         self.parameters = filters.parameters
@@ -32,7 +34,7 @@ class FiltersEntity: Object {
         for parameter in parameters{
             parametersArray.append(parameter)
         }*/
-        let model = Filters(currentFilter: self.currentFilter, name: self.name, parameters: self.parameters)
+        let model = Filters(id: self.id, currentFilter: self.currentFilter, name: self.name, parameters: self.parameters)
         return model
     }
 }

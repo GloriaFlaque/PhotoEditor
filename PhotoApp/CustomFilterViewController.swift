@@ -32,8 +32,8 @@ class CustomFilterViewController: UIViewController {
     
     @IBAction func cancelButton(_ sender: Any) {
         //self.repository.deleteAll()
-        DataHolder.sharedInstance.filters.removeAll()
-        performSegue(withIdentifier: "showSelec", sender: self)
+        //DataHolder.sharedInstance.filters.removeAll()
+        performSegue(withIdentifier: "showSelectCu", sender: self)
     }
     @IBAction func saveButton(_ sender: Any) {
         performSegue(withIdentifier: "showSaveC", sender: self)
@@ -43,6 +43,7 @@ class CustomFilterViewController: UIViewController {
         self.repository.create(a: finishFilter)
         finishFilters = repository.getAll()
         collectionView.reloadData()
+        print(DataHolder.sharedInstance.filters)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,11 +78,11 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func createCellForIndexPath(_ indexPath: IndexPath) -> CustomFilterCell {
-     let cell: CustomFilterCell =
-     collectionView.dequeueReusableCell(withReuseIdentifier: "customFilterCell", for: indexPath) as! CustomFilterCell
-     let finishFilters2 = finishFilters[indexPath.row]
-     cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
-     return cell
+        let cell: CustomFilterCell =
+            collectionView.dequeueReusableCell(withReuseIdentifier: "customFilterCell", for: indexPath) as! CustomFilterCell
+        let finishFilters2 = finishFilters[indexPath.row]
+        cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -94,6 +95,8 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.realImage2
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
         imageView.image = DataHolder.sharedInstance.realImage
+        DataHolder.sharedInstance.filters = []
+        DataHolder.sharedInstance.filters = finishFilters2.filters
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)

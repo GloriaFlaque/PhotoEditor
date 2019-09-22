@@ -27,7 +27,7 @@ class LocalCustomFiltersRepository: NSObject{
     func create(a: CustomFilters) -> Bool {
         do {
             let realm = try Realm()
-            let entity = CustomFiltersEntity(id: a.id, date: a.date, filters: a.filters)
+            let entity = CustomFiltersEntity(customFilters: a)
             try realm.write {
                 realm.add(entity, update: true)
             }

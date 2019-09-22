@@ -23,6 +23,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var inputIntensity = 0.5
     var currentFilterName = ""
     var filterName = ""
+    var filtarId = ""
     let context = CIContext(options: nil)
     
     @IBAction func finishButton(_ sender: Any) {
@@ -30,7 +31,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     @IBAction func cancelButton(_ sender: Any) {
         //self.repository.deleteAll()
-        DataHolder.sharedInstance.filters = []
+        DataHolder.sharedInstance.customFilters = []
         performSegue(withIdentifier: "showSelec", sender: self)
     }
     
@@ -39,6 +40,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             intensityVC.realImage = imageView.image
             intensityVC.currentFilterName = currentFilterName
             intensityVC.filterName = filterName
+            intensityVC.filterId = filtarId
         }
     }
     
@@ -50,20 +52,17 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         realImage = DataHolder.sharedInstance.realImage
         realImage2 = DataHolder.sharedInstance.realImage2
         
-        let sepia = Filters(currentFilter: "CISepiaTone", name: "Sepia", parameters: 0.5)
-        let falseColor = Filters(currentFilter: "CIFalseColor", name: "FalseColor", parameters: 1)
-       // let zoomBlur = Filters(currentFilter: "CIZoomBlur", name: "ZoomBlur", parameters: [30, CIVector(x: 200, y: 200)])
-        let morphologyGradient = Filters(currentFilter: "CIMorphologyGradient", name: "MorphologyGradient", parameters: 1)
-        let vignette = Filters(currentFilter: "CIVignette", name: "vignette", parameters: 1)
-        let gammaAdjust = Filters(currentFilter: "CIGammaAdjust", name: "CIGammaAdjust", parameters: 0.4)
-        let brightness = Filters(currentFilter: "CIColorControls", name: "Brightness", parameters: 0.5)
+        let sepia = Filters(id: "1", currentFilter: "CISepiaTone", name: "Sepia", parameters: 0.5)
+        let falseColor = Filters(id: UUID().uuidString, currentFilter: "CIFalseColor", name: "FalseColor", parameters: 1)
+        let morphologyGradient = Filters(id: UUID().uuidString, currentFilter: "CIMorphologyGradient", name: "MorphologyGradient", parameters: 1)
+        let gammaAdjust = Filters(id: UUID().uuidString, currentFilter: "CIGammaAdjust", name: "CIGammaAdjust", parameters: 0.4)
+        let sepia2 = Filters(id: UUID().uuidString, currentFilter: "CISepiaTone", name: "Sepia", parameters: 1)
+        
         filters.append(sepia)
         filters.append(morphologyGradient)
-        filters.append(vignette)
         filters.append(gammaAdjust)
         filters.append(falseColor)
-        filters.append(brightness)
-        //filters.append(zoomBlur)
+        filters.append(sepia2)
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,6 +73,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         intensityVC.realImage = imageView.image
         intensityVC.currentFilterName = currentFilterName
         intensityVC.filterName = filterName
+        intensityVC.filterId = filtarId
     }
 }
 
@@ -89,14 +89,14 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
         let filter = filters[indexPath.row]
         cell.filterName.text = filter.name
-        /*cell.imageFilter.image = self.addFilter(inputImage: realImage2!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)*/
+        cell.imageFilter.image = DataHolder.sharedInstance.addFilter(inputImage: realImage2!, orientation: (realImage2?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let image = realImage
         currentFilterName = filters[indexPath.row].currentFilter
         filterName = filters[indexPath.row].name
-        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: image!, orientation: nil, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
+        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: image!, orientation: (image?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
         performSegue(withIdentifier: "showIntensity", sender: self)
     }
 }

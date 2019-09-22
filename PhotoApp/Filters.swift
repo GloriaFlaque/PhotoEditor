@@ -8,12 +8,14 @@
 
 import Foundation
 class Filters {
+    var id: String!
     var currentFilter: String!
     var name: String!
     var parameters: Double!
     
-    init(currentFilter: String,name: String, parameters: Double) {
-    self.currentFilter = currentFilter
+    init(id: String, currentFilter: String,name: String, parameters: Double) {
+      self.id = id
+      self.currentFilter = currentFilter
       self.name = name
       self.parameters = parameters
     }

@@ -9,12 +9,16 @@
 import Foundation
 class CustomFilters {
     var id: String!
-    var filters: [Filters] = []
+    var currentFilter: String!
+    var name: String!
+    var parameters: Double!
     var date: Date!
     
-    init(id: String, filters: [Filters], date: Date) {
+    init(id: String, currentFilter: String,name: String, parameters: Double, date: Date) {
         self.id = id
-        self.filters = filters
+        self.currentFilter = currentFilter
+        self.name = name
+        self.parameters = parameters
         self.date = date
     }
 }

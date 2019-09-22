@@ -11,25 +11,24 @@ import RealmSwift
 
 class CustomFiltersEntity: Object {
     @objc dynamic var id = ""
-    var filters: List <FiltersEntity> = List <FiltersEntity>()
-    @objc dynamic var date = Date()
+    @objc dynamic var currentFilter = ""
+    @objc dynamic var name = ""
+    @objc dynamic var parameters: Double = 0.0
     override static func primaryKey() -> String?{
         return "id"
     }
-    convenience init(id: String, date: Date, filters:[Filters]) {
+    @objc dynamic var date = Date()
+    
+    convenience init(customFilters: CustomFilters) {
         self.init()
-        self.id = id
-        self.date = date
-        for filter in filters{
-            self.filters.append(FiltersEntity(filters: filter))
-        }
+        self.id = customFilters.id
+        self.currentFilter = customFilters.currentFilter
+        self.name = customFilters.name
+        self.parameters = customFilters.parameters
+        self.date = customFilters.date
     }
     func customFiltersModel() -> CustomFilters{
-        var filtersArray: [Filters] = []
-        for filter in filters{
-            filtersArray.append(filter.filtersModel())
-        }
-        let model = CustomFilters(id: self.id, filters: filtersArray, date: self.date)
+        let model = CustomFilters(id: self.id, currentFilter: self.currentFilter, name: self.name, parameters: self.parameters, date: self.date)
         return model
     }
 }

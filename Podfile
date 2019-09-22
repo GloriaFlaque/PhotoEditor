@@ -13,5 +13,6 @@ target 'PhotoApp' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'FirebaseUI/Auth'
+  pod 'RealmSwift'
 
 end

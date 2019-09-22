@@ -18,9 +18,9 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         if imageView.image == realImage {
             performSegue(withIdentifier: "photoSelected", sender: self)
         }
-        DataHolder.sharedInstance.filters = []
+        /*DataHolder.sharedInstance.filters = []
         filterrepository.deleteAll()
-        repository.deleteAll()
+        repository.deleteAll()*/
     }
     
     @IBAction func selectPhoto(_ sender: Any) {
@@ -46,6 +46,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         filterrepository = LocalFiltersRepository()
         repository = LocalFinishFiltersRepository()
+        
     }
     
     func showImagePickerController(SourceType: UIImagePickerController.SourceType){

@@ -33,7 +33,6 @@ class LocalFinishFiltersRepository: NSObject {
             }
         }
         catch {
-            print("vbnvbnvbnvbnvbnvbnvbnvbnvbnvbnvnfghfghfghfghfghfghhutfdtjydyjtdytdytdtdytdytdytdytdyjtytdjydytdjydjyddjytdjytdjdjyd")
             return false
         }
         return true
