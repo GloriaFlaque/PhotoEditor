@@ -18,21 +18,30 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     var currentFilterName = ""
     var filterName = ""
     var filterId = ""
+    var intensityPrameter: Double = 0.0
     var realImage: UIImage?
     @IBOutlet var intensity:UISlider!
     var value: Float?
-    
+    var position: Int = -1
     
     
     @IBAction func slider(_ sender: Any) {
         imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: (realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
     }
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBAction func cancelButton(_ sender: Any) {
         self.performSegue(withIdentifier: "showMEdit", sender: self)
     }
+    
     @IBAction func addButton(_ sender: Any) {
+        for i in DataHolder.sharedInstance.filters {
+            position = +1
+            if i.name == filterName {
+                DataHolder.sharedInstance.filters.remove(at: position)
+            }
+        }
         let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value))
         DataHolder.sharedInstance.filters.append(filter)
         filterrepository.create(a: filter)
@@ -53,6 +62,7 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
         imageView.image = realImage
         repository = LocalCustomFiltersRepository()
         filterrepository = LocalFiltersRepository()
+        intensity.value = Float(intensityPrameter)
     }
 
 }

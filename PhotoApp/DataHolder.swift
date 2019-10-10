@@ -15,7 +15,9 @@ class DataHolder: NSObject {
     static let sharedInstance:DataHolder = DataHolder()
     var realImage: UIImage?
     var realImage2: UIImage?
+    var originalImg: UIImage?
     var filters: [Filters] = []
+    var actualFinishFilter: [Filters] = []
     var customFilters: [CustomFilters] = []
     //var parameters: [Double] = []
     
@@ -57,14 +59,14 @@ class DataHolder: NSObject {
             cimage = cimage!.applyingFilter(
                 "CIMorphologyGradient",
                 parameters: [
-                    "inputRadius": parameters * 2
+                    "inputRadius": parameters * 3
                 ])
         case "vignette":
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
                     "inputIntensity": parameters,
-                    "inputRadius": parameters * 2
+                    "inputRadius": parameters * 3
                 ])
         case "Exposure":
             cimage = cimage!.applyingFilter(
@@ -196,12 +198,14 @@ class DataHolder: NSObject {
         }
         
         switch name {
+        case "Original":
+            realImage = inputImage
         case "Vignette":
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
                     "inputIntensity": parameters,
-                    "inputRadius": parameters * 2
+                    "inputRadius": parameters * 3
                 ])
         case "Exposure":
             cimage = cimage!.applyingFilter(
@@ -277,8 +281,9 @@ class DataHolder: NSObject {
             cimage = cimage!.applyingFilter(
                 "CIVibrance",
                 parameters: [
-                    "inputAmount": 2.5
+                    "inputAmount": parameters * 2
                 ])
+            print(parameters)
         case "CIWhitePointAdjust":
             cimage = cimage!.applyingFilter(
                 "CIWhitePointAdjust",

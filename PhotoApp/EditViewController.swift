@@ -15,6 +15,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var currentFilterName = ""
     var filterName = ""
+    var intensityPrameter: Double = 0.0
     
     var realImage: UIImage?
     var realImage2: UIImage?
@@ -33,23 +34,25 @@ class EditViewController: UIViewController {
             intensityVC.realImage = imageView.image
             intensityVC.currentFilterName = currentFilterName
             intensityVC.filterName = filterName
+            intensityVC.intensityPrameter = intensityPrameter
         }
         if let intensityVC2 = segue.destination as? IntesityViewController2 {
             intensityVC2.realImage = imageView.image
             intensityVC2.currentFilterName = currentFilterName
             intensityVC2.filterName = filterName
+            intensityVC2.intensityPrameter = intensityPrameter
         }
     }
     
     
     override func viewDidLoad() {
-        repository = LocalFinishFiltersRepository()
         super.viewDidLoad()
+        repository = LocalFinishFiltersRepository()
         imageView.image = DataHolder.sharedInstance.realImage
         realImage = DataHolder.sharedInstance.realImage
         realImage?.imageOrientation == UIImage.Orientation.up
         
-        let vignette = Filters(id: UUID().uuidString, currentFilter: "CIVignette", name: "Vignette", parameters: 1)
+        let vignette = Filters(id: UUID().uuidString, currentFilter: "CIVignette", name: "Vignette", parameters: 3)
         let exposure = Filters(id: UUID().uuidString, currentFilter: "CIGammaAdjust", name: "Exposure", parameters: 0.5)
         let brightness = Filters(id: UUID().uuidString, currentFilter: "CIColorControls", name: "Brightness", parameters: 0.5)
         let contrast = Filters(id: UUID().uuidString, currentFilter: "CIColorControls", name: "Contrast", parameters: 0.5)
@@ -111,11 +114,12 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let image = realImage
+        let image = DataHolder.sharedInstance.realImage
         currentFilterName = filters[indexPath.row].currentFilter
         filterName = filters[indexPath.row].name
+        intensityPrameter = filters[indexPath.row].parameters
         
-        imageView.image = DataHolder.sharedInstance.addEdit(inputImage: image!, orientation: (realImage2?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
+        imageView.image = DataHolder.sharedInstance.addEdit(inputImage: image!, orientation: (image?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name: filters[indexPath.row].name)
         
         if filters[indexPath.row].name == "Brightness" || filters[indexPath.row].name == "CIVibrance" {
             performSegue(withIdentifier: "showIntensity3", sender: self)

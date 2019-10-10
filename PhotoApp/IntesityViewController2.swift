@@ -16,6 +16,7 @@ class IntesityViewController2: UIViewController, DataHolderDelegate {
     @IBOutlet var addButton: UIButton?
     var currentFilterName = ""
     var filterName = ""
+    var intensityPrameter: Double = 0.0
     var realImage: UIImage?
     @IBOutlet var intensity:UISlider!
     var value: Float?
@@ -50,6 +51,7 @@ class IntesityViewController2: UIViewController, DataHolderDelegate {
         imageView.image = realImage
         repository = LocalCustomFiltersRepository()
         filterrepository = LocalFiltersRepository()
+        intensity.value = Float(intensityPrameter)
     }
     
 }

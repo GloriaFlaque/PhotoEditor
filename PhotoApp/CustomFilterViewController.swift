@@ -88,20 +88,30 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         finishFilters2 = finishFilters[indexPath.row]
         count = finishFilters2.date
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.blue.cgColor
+        /*cell?.layer.borderColor = UIColor.blue.cgColor
         cell?.layer.borderWidth = 1.5
-        cell?.isSelected = true
+        cell?.isSelected = true*/
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.black.cgColor
+        cell?.layer.borderWidth = 1.5
+        cell?.isHighlighted = true
+        
+        DataHolder.sharedInstance.actualFinishFilter = []
+        DataHolder.sharedInstance.actualFinishFilter = finishFilters2.filters
+        
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.realImage2
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
+        
         imageView.image = DataHolder.sharedInstance.realImage
         DataHolder.sharedInstance.filters = []
         DataHolder.sharedInstance.filters = finishFilters2.filters
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        //cell?.layer.borderColor = UIColor.clear.cgColor
         cell?.layer.borderColor = UIColor.clear.cgColor
-        cell?.layer.borderWidth = 1.5
-        cell?.isSelected = true
+        cell?.isHighlighted = false
+        //cell?.isSelected = false
     }
 }

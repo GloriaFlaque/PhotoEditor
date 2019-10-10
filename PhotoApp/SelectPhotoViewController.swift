@@ -13,6 +13,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     var realImage: UIImage?
     internal var filterrepository: LocalFiltersRepository!
     internal var repository: LocalFinishFiltersRepository!
+    @IBOutlet var nextButton: UIButton?
     
     @IBAction func next(_ sender: Any) {
         if imageView.image == realImage {
@@ -47,6 +48,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         filterrepository = LocalFiltersRepository()
         repository = LocalFinishFiltersRepository()
         
+        nextButton?.isHidden = true
     }
     
     func showImagePickerController(SourceType: UIImagePickerController.SourceType){
@@ -58,6 +60,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        nextButton?.isHidden = false
         realImage = (info[UIImagePickerController.InfoKey.originalImage]! as! UIImage)
         imageView.image = realImage
         
