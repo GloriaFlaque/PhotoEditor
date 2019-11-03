@@ -14,6 +14,10 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     internal var filterrepository: LocalFiltersRepository!
     internal var repository: LocalFinishFiltersRepository!
     @IBOutlet var nextButton: UIButton?
+    //@IBOutlet var selectButton: UIButton?
+    @IBOutlet var libraryButton: UIButton?
+    @IBOutlet var cameraButton: UIButton?
+    
     
     @IBAction func next(_ sender: Any) {
         if imageView.image == realImage {
@@ -24,7 +28,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         repository.deleteAll()*/
     }
     
-    @IBAction func selectPhoto(_ sender: Any) {
+    /*@IBAction func selectPhoto(_ sender: Any) {
         let photoLibrary = UIAlertAction(title: "Photo library", style: .default) { (action) in
             self.showImagePickerController(SourceType: .photoLibrary)
         }
@@ -34,6 +38,14 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         AlertService.showAlert(style: .actionSheet, title: nil, message: nil, actions: [photoLibrary, camera, cancel], completion: nil)
+    }*/
+    
+    @IBAction func libraryPhoto(_ sender: Any) {
+        self.showImagePickerController(SourceType: .photoLibrary)
+    }
+    
+    @IBAction func cameraPhoto(_ sender: Any) {
+        self.showImagePickerController(SourceType: .camera)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -48,6 +60,8 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         filterrepository = LocalFiltersRepository()
         repository = LocalFinishFiltersRepository()
         
+        AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+        
         nextButton?.isHidden = true
     }
     
@@ -61,6 +75,9 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         nextButton?.isHidden = false
+        //selectButton?.isHidden = true
+        libraryButton?.isHidden = true
+        cameraButton?.isHidden = true
         realImage = (info[UIImagePickerController.InfoKey.originalImage]! as! UIImage)
         imageView.image = realImage
         

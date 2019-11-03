@@ -23,7 +23,6 @@ class DataHolder: NSObject {
     
     let context = CIContext(options: nil)
     
-    
     func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Double, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
         if orientation != nil {
@@ -37,10 +36,14 @@ class DataHolder: NSObject {
                 parameters: [
                     kCIInputIntensityKey: parameters
                 ])
-            print(parameters)
-            /*case "CIColorClamp":
-             filter.setValue(parameters[0], forKey: "inputMaxComponents")
-             filter.setValue(CIVector(x: 0.0, y: 0.0, z: 0.0, w: 0.0), forKey: "inputMinComponents")*/
+            
+        case "MorphologyGradient":
+            cimage = cimage!.applyingFilter(
+                "CIMorphologyGradient",
+                parameters: [
+                    "inputRadius": parameters
+                ])
+            
         case "FalseColor":
             cimage = cimage!.applyingFilter(
                 "CIFalseColor",
@@ -48,54 +51,21 @@ class DataHolder: NSObject {
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
                     "inputColor1": CIColor(red: CGFloat(parameters) , green: CGFloat(parameters), blue: CGFloat(parameters))
                 ])
-        case "ZoomBlur":
-            cimage = cimage!.applyingFilter(
-                "CIZoomBlur",
-                parameters: [
-                    "inputAmount": parameters,
-                    "inputCenter": parameters
-                ])
-        case "MorphologyGradient":
-            cimage = cimage!.applyingFilter(
-                "CIMorphologyGradient",
-                parameters: [
-                    "inputRadius": parameters * 3
-                ])
-        case "vignette":
-            cimage = cimage!.applyingFilter(
-                "CIVignette",
-                parameters: [
-                    "inputIntensity": parameters,
-                    "inputRadius": parameters * 3
-                ])
-        case "Exposure":
-            cimage = cimage!.applyingFilter(
-                "CIGammaAdjust",
-                parameters: [
-                    "inputPower": parameters * 3
-                ])
-        case "Brightness":
-            cimage = cimage!.applyingFilter(
-                "CIColorControls",
-                parameters: [
-                    "inputBrightness": parameters * -1,
-                    "inputContrast": 1,
-                    "inputSaturation": 1
-                ])
-        case "Contrast":
-            cimage = cimage!.applyingFilter(
-                "CIColorControls",
-                parameters: [
-                    "inputBrightness": 0,
-                    "inputContrast": parameters,
-                    "inputSaturation": 1
-                ])
-        case "Sepia2":
-            cimage = cimage!.applyingFilter(
-                "CISepiaTone",
-                parameters: [
-                    kCIInputIntensityKey: parameters
-                ])
+        case "CIPhotoEffectChrome":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectChrome")
+            
+        case "CIPhotoEffectFade":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectFade")
+            
+        case "CIPhotoEffectInstant":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectInstant")
+            
+        case "CIPhotoEffectMono":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectMono")
         default: break
         }
         let cgImage = context.createCGImage(cimage!, from: cimage!.extent)
@@ -120,16 +90,16 @@ class DataHolder: NSObject {
             cimage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
-                    kCIInputIntensityKey: parameters
+                    kCIInputIntensityKey: parameters!
                 ])
-            print(parameters)
-        case "CIColorClamp":
-            cimage = cimage?.applyingFilter(
-             "CIColorClamp",
-             parameters: [
-            "inputMaxComponents": parameters as Any,
-             "inputMinComponents": CIVector(x: 0.0, y: 0.0, z: 0.0, w: 0.0)
-             ])
+        
+        case "MorphologyGradient":
+        cimage = cimage!.applyingFilter(
+            "CIMorphologyGradient",
+            parameters: [
+                "inputRadius": parameters!
+            ])
+            
         case "FalseColor":
             print("FalseColor creado")
             cimage = cimage!.applyingFilter(
@@ -138,44 +108,103 @@ class DataHolder: NSObject {
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
                     "inputColor1": CIColor(red: CGFloat(parameters!) , green: CGFloat(parameters!), blue: CGFloat(parameters!))
                 ])
-            print(parameters)
-        case "ZoomBlur":
-            cimage = cimage!.applyingFilter(
-                "CIZoomBlur",
-                parameters: [
-                    "inputAmount": parameters!,
-                    "inputCenter": parameters!
-                ])
-        case "MorphologyGradient":
-            cimage = cimage!.applyingFilter(
-                "CIMorphologyGradient",
-                parameters: [
-                    "inputRadius": parameters! * 2
-                ])
+            
+        case "Exposure":
+        cimage = cimage!.applyingFilter(
+            "CIExposureAdjust",
+            parameters: [
+                "inputEV": CGFloat(parameters!)
+            ])
+            
+        case "Contrast":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": 0,
+                "inputContrast": parameters!,
+                "inputSaturation": 1
+            ])
+        
         case "Saturation":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": 0,
+                "inputContrast": 1,
+                "inputSaturation": parameters!,
+            ])
+            
+        case "Brightness":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": parameters!,
+                "inputContrast": 1,
+                "inputSaturation": 1
+            ])
+            
+        case "Vignette":
             cimage = cimage!.applyingFilter(
-                "CIColorControls",
+                "CIVignette",
                 parameters: [
-                    "inputBrightness": 0,
-                    "inputContrast": 1,
-                    "inputSaturation": parameters!
+                    "inputIntensity": parameters!,
+                    "inputRadius": parameters! * 8
                 ])
-        case "CIColorMatrix":
+            
+        case "CIGammaAdjust":
             cimage = cimage!.applyingFilter(
-                "CIColorMatrix",
+                "CIGammaAdjust",
                 parameters: [
-                    "inputAVector": CIVector(x: 0, y: 0, z: 0, w: 1.25),
-                    "inputBiasVector": CIVector (x: 0, y: 1, z: 0, w: 0),
-                    "inputBVector": CIVector (x: 0, y: 0, z: 0.75),
-                    "inputGVector": CIVector (x: 0, y: 1.5, z: 0),
-                    "inputRVector": CIVector (x: 0.5, y: 0, z: 0)
+                    "inputPower": parameters!
                 ])
-        case "Sepia2":
-            print("Sepia")
+            
+        case "CIVibrance":
+        cimage = cimage!.applyingFilter(
+            "CIVibrance",
+            parameters: [
+                "inputAmount": parameters!
+            ])
+            
+        case "Temperature":
+        cimage = cimage!.applyingFilter(
+            "CITemperatureAndTint",
+            parameters: [
+                "inputNeutral": CIVector(x: 6500, y: 0),
+                "inputTargetNeutral": CIVector(x: CGFloat(parameters!), y: 0),
+            ])
+            
+        case "CIWhitePointAdjust":
+        cimage = cimage!.applyingFilter(
+            "CIWhitePointAdjust",
+            parameters: [
+                "inputColor": CIColor(red: 1.0, green: 0.92, blue: 0.49, alpha: CGFloat(parameters!))
+            ])
+            
+        case "CIColorPolynomial":
             cimage = cimage!.applyingFilter(
-                "CISepiaTone",
+                "CIColorPolynomial",
                 parameters: [
-                    kCIInputIntensityKey: parameters
+                    "inputAlphaCoefficients": CIVector(x: 0, y: 1, z: 0, w: 0),
+                    "inputBlueCoefficients": CIVector (x: 0, y: CGFloat(parameters!), z: 0, w: 0),
+                    "inputGreenCoefficients": CIVector (x: 0, y: CGFloat(parameters!), z: 0, w: 0),
+                    "inputRedCoefficients": CIVector (x: 0, y: 1, z: 0, w: 0),
+                ])
+            
+        case "CINoiseReduction":
+            cimage = cimage!.applyingFilter(
+                "CINoiseReduction",
+                parameters: [
+                    "inputNoiseLevel": 0.02,
+                    "inputSharpness": parameters!,
+                ])
+            
+        case "CIColorCrossPolynomial":
+            cimage = cimage!.applyingFilter(
+                "CIColorCrossPolynomial",
+                parameters: [
+                    "inputRedCoefficients": CIVector(values: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0], count: 10),
+                    "inputGreenCoefficients": CIVector(values: [0, 1, 0, 0, 0, 0, 0, 0, 1, 0], count: 10),
+                    "inputBlueCoefficients": CIVector(values: [1, 0, CGFloat(parameters!), 0, 0, 0, 0, 0, 0, 0], count: 10),
                 ])
             default: break
           }
@@ -198,107 +227,93 @@ class DataHolder: NSObject {
         }
         
         switch name {
-        case "Original":
-            realImage = inputImage
+        case "Exposure":
+        cimage = cimage!.applyingFilter(
+            "CIExposureAdjust",
+            parameters: [
+                "inputEV": CGFloat(parameters)
+            ])
+            
+        case "Contrast":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": 0,
+                "inputContrast": parameters,
+                "inputSaturation": 1
+            ])
+        
+        case "Saturation":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": 0,
+                "inputContrast": 1,
+                "inputSaturation": parameters,
+            ])
+            
+        case "Brightness":
+        cimage = cimage!.applyingFilter(
+            "CIColorControls",
+            parameters: [
+                "inputBrightness": parameters,
+                "inputContrast": 1,
+                "inputSaturation": 1
+            ])
+            
         case "Vignette":
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
                     "inputIntensity": parameters,
-                    "inputRadius": parameters * 3
+                    "inputRadius": parameters * 8
                 ])
-        case "Exposure":
+            
+        case "CIGammaAdjust":
             cimage = cimage!.applyingFilter(
                 "CIGammaAdjust",
                 parameters: [
-                    "inputPower": parameters * 3
+                    "inputPower": parameters
                 ])
-        case "Brightness":
-            cimage = cimage!.applyingFilter(
-                "CIColorControls",
-                parameters: [
-                    "inputBrightness": parameters * 0.5,
-                    "inputContrast": 1,
-                    "inputSaturation": 1
-                ])
-        case "Contrast":
-            cimage = cimage!.applyingFilter(
-                "CIColorControls",
-                parameters: [
-                    "inputBrightness": 0,
-                    "inputContrast": parameters * 3,
-                    "inputSaturation": 1
-                ])
-        case "Saturation":
-            cimage = cimage!.applyingFilter(
-                "CIColorControls",
-                parameters: [
-                    "inputBrightness": 0,
-                    "inputContrast": 1,
-                    "inputSaturation": parameters * 2,
-                ])
-        case "CIColorMatrix":
-            cimage = cimage!.applyingFilter(
-                "CIColorMatrix",
-                parameters: [
-                    "inputAVector": CIVector(x: 1, y: 0, z: 0, w: 0),
-                    "inputBiasVector": CIVector (x: 0, y: 0, z: 0, w: 0),
-                    "inputBVector": CIVector (x: 5, y: 0, z: 0),
-                    "inputGVector": CIVector (x: 0, y: 0, z: 0),
-                    "inputRVector": CIVector (x: 0, y: 0, z: 0)
-                ])
+            
+        case "CIVibrance":
+        cimage = cimage!.applyingFilter(
+            "CIVibrance",
+            parameters: [
+                "inputAmount": parameters
+            ])
+            
+        case "Temperature":
+        cimage = cimage!.applyingFilter(
+            "CITemperatureAndTint",
+            parameters: [
+                "inputNeutral": CIVector(x: 6500, y: 0),
+                "inputTargetNeutral": CIVector(x: CGFloat(parameters), y: 0),
+            ])
+            
+        case "CIWhitePointAdjust":
+        cimage = cimage!.applyingFilter(
+            "CIWhitePointAdjust",
+            parameters: [
+                "inputColor": CIColor(red: 1.0, green: 0.92, blue: 0.49, alpha: CGFloat(parameters))
+            ])
             
         case "CIColorPolynomial":
             cimage = cimage!.applyingFilter(
                 "CIColorPolynomial",
                 parameters: [
-                    "inputAlphaCoefficients": CIVector(x: 1, y: 0, z: 0, w: 0),
-                    "inputBlueCoefficients": CIVector (x: 1, y: 0, z: 0, w: 0),
-                    "inputGreenCoefficients": CIVector (x: 0, y: 1, z: 0, w: 0),
-                    "inputRedCoefficients": CIVector (x: 1, y: 0, z: 0, w: 0),
+                    "inputAlphaCoefficients": CIVector(x: 0, y: 1, z: 0, w: 0),
+                    "inputBlueCoefficients": CIVector (x: 0, y: CGFloat(parameters), z: 0, w: 0),
+                    "inputGreenCoefficients": CIVector (x: 0, y: CGFloat(parameters), z: 0, w: 0),
+                    "inputRedCoefficients": CIVector (x: 0, y: 1, z: 0, w: 0),
                 ])
-            
-        case "CIDepthToDisparity":
+        
+        case "CINoiseReduction":
             cimage = cimage!.applyingFilter(
-                "CIDepthToDisparity")
-            
-        case "CIExposureAdjust":
-            cimage = cimage!.applyingFilter(
-                "CIExposureAdjust",
+                "CINoiseReduction",
                 parameters: [
-                    "inputEV": CGFloat(parameters)
-                ])
-            
-        case "Temperature":
-            cimage = cimage!.applyingFilter(
-                "CITemperatureAndTint",
-                parameters: [
-                    "inputNeutral": CIVector(x: 6500, y: 0),
-                    "inputTargetNeutral": CIVector(x: 4000, y: 0),
-                ])
-            
-        case "CIVibrance":
-            cimage = cimage!.applyingFilter(
-                "CIVibrance",
-                parameters: [
-                    "inputAmount": parameters * 2
-                ])
-            print(parameters)
-        case "CIWhitePointAdjust":
-            cimage = cimage!.applyingFilter(
-                "CIWhitePointAdjust",
-                parameters: [
-                    "inputColor": CIColor(red: 1.0, green: 0.92, blue: 0.49, alpha: 0.5)
-                ])
-        case "CIToneCurve":
-            cimage = cimage!.applyingFilter(
-                "CIToneCurve",
-                parameters: [
-                    "inputPoint0": CIVector(x: 0, y: 0),
-                    "inputPoint1": CIVector(x: 0.27, y: 0.26),
-                    "inputPoint2": CIVector(x:0.5, y:0.80),
-                    "inputPoint3": CIVector(x: 0.7, y:1.0),
-                    "inputPoint4": CIVector(x: 1.0,  y:1.0),
+                    "inputNoiseLevel": 0.02,
+                    "inputSharpness": parameters,
                 ])
         default: break
         }
@@ -307,10 +322,58 @@ class DataHolder: NSObject {
         
         return resultImage
     }
+    
+    func imageOrientation(_ srcImage: UIImage)->UIImage {
+    if srcImage.imageOrientation == UIImage.Orientation.up {
+            return srcImage
+     }
+     var transform: CGAffineTransform = CGAffineTransform.identity
+     switch srcImage.imageOrientation {
+        case UIImageOrientation.down, UIImageOrientation.downMirrored:
+            transform = transform.translatedBy(x: srcImage.size.width, y: srcImage.size.height)
+            transform = transform.rotated(by: CGFloat(M_PI))// replace M_PI by Double.pi when using swift 4.0
+        break
+        case UIImageOrientation.left, UIImageOrientation.leftMirrored:
+            transform = transform.translatedBy(x: srcImage.size.width, y: 0)
+            transform = transform.rotated(by: CGFloat(M_PI_2))// replace M_PI_2 by Double.pi/2 when using swift 4.0
+        break
+        case UIImageOrientation.right, UIImageOrientation.rightMirrored:
+            transform = transform.translatedBy(x: 0, y: srcImage.size.height)
+            transform = transform.rotated(by: CGFloat(-M_PI_2))// replace M_PI_2 by Double.pi/2 when using swift 4.0
+        break
+        case UIImageOrientation.up, UIImageOrientation.upMirrored:
+        break
+        }
+        switch srcImage.imageOrientation {
+        case UIImageOrientation.upMirrored, UIImageOrientation.downMirrored:
+            transform.translatedBy(x: srcImage.size.width, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+            break
+        case UIImageOrientation.leftMirrored, UIImageOrientation.rightMirrored:
+            transform.translatedBy(x: srcImage.size.height, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+        case UIImageOrientation.up, UIImageOrientation.down, UIImageOrientation.left, UIImageOrientation.right:
+            break
+        }
+    let ctx:CGContext = CGContext(data: nil, width: Int(srcImage.size.width), height: Int(srcImage.size.height), bitsPerComponent: (srcImage.cgImage)!.bitsPerComponent, bytesPerRow: 0, space: (srcImage.cgImage)!.colorSpace!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+    ctx.concatenate(transform)
+    switch srcImage.imageOrientation {
+        case UIImageOrientation.left, UIImageOrientation.leftMirrored, UIImageOrientation.right, UIImageOrientation.rightMirrored:
+            ctx.draw(srcImage.cgImage!, in: CGRect(x: 0, y: 0, width: srcImage.size.height, height: srcImage.size.width))
+        break
+        default:
+            ctx.draw(srcImage.cgImage!, in: CGRect(x: 0, y: 0, width: srcImage.size.width, height: srcImage.size.height))
+        break
+     }
+    let cgimg:CGImage = ctx.makeImage()!
+     let img:UIImage = UIImage(cgImage: cgimg)
+    return img
+    }
 }
-@objc protocol DataHolderDelegate{
-     @objc optional func DHDDaddFilter(blFin:Bool)
-}
+
+//@objc protocol DataHolderDelegate{
+     //@objc optional func DHDDaddFilter(blFin:Bool)
+//}
 
 
 

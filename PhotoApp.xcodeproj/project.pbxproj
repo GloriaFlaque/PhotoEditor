@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0635D20E22C3C1F300AB988B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635D20D22C3C1F300AB988B /* EditViewController.swift */; };
+		06B64C7D236E0A1900E4E0D6 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B64C7C236E0A1900E4E0D6 /* FilterList.swift */; };
 		06E36B66231FE9E600B9DF40 /* EditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E36B65231FE9E600B9DF40 /* EditCell.swift */; };
+		06E4DC77235634E0005C05E9 /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E4DC76235634E0005C05E9 /* CustomSegue.swift */; };
 		06EBC5C82324245C00FFF4AF /* IntesityViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EBC5C72324245C00FFF4AF /* IntesityViewController2.swift */; };
 		57232C8D22397CFA00938B06 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57232C8C22397CFA00938B06 /* GoogleService-Info.plist */; };
-		5753D8462252998F00039CD9 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5753D8452252998F00039CD9 /* AlertService.swift */; };
-		575500E322A6FACE0050878A /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575500E222A6FACE0050878A /* Parameters.swift */; };
 		575571522289EF0E00F04310 /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575571512289EF0E00F04310 /* SaveViewController.swift */; };
-		57572F2322A8507000A24158 /* ParameterEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572F2222A8507000A24158 /* ParameterEntity.swift */; };
 		5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757419E226C9ED000CB4D55 /* MainTabBarController.swift */; };
 		575741A1226CAD6000CB4D55 /* CustomFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */; };
 		575741A3226CDC3D00CB4D55 /* CustomFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741A2226CDC3D00CB4D55 /* CustomFilters.swift */; };
@@ -94,13 +93,12 @@
 
 /* Begin PBXFileReference section */
 		0635D20D22C3C1F300AB988B /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		06B64C7C236E0A1900E4E0D6 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
 		06E36B65231FE9E600B9DF40 /* EditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCell.swift; sourceTree = "<group>"; };
+		06E4DC76235634E0005C05E9 /* CustomSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		06EBC5C72324245C00FFF4AF /* IntesityViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntesityViewController2.swift; sourceTree = "<group>"; };
 		57232C8C22397CFA00938B06 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5753D8452252998F00039CD9 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
-		575500E222A6FACE0050878A /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		575571512289EF0E00F04310 /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
-		57572F2222A8507000A24158 /* ParameterEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEntity.swift; sourceTree = "<group>"; };
 		5757419E226C9ED000CB4D55 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterViewController.swift; sourceTree = "<group>"; };
 		575741A2226CDC3D00CB4D55 /* CustomFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilters.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 				575741A5226E288300CB4D55 /* FiltersEntity.swift */,
 				575741A7226E28BD00CB4D55 /* CustomFiltersEntity.swift */,
 				5757B7A72288A3D9004A2DFB /* FinishFilterEntity.swift */,
-				57572F2222A8507000A24158 /* ParameterEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -238,7 +235,6 @@
 				5782175122318B420047B536 /* Info.plist */,
 				57232C8C22397CFA00938B06 /* GoogleService-Info.plist */,
 				579EA96C22495A9C001A2261 /* EditorViewController.swift */,
-				5753D8452252998F00039CD9 /* AlertService.swift */,
 				57B4FF182268BC3F00981207 /* FilterCell.swift */,
 				57B4FF1A226A2AF500981207 /* SelectPhotoViewController.swift */,
 				5757419E226C9ED000CB4D55 /* MainTabBarController.swift */,
@@ -250,6 +246,8 @@
 				0635D20D22C3C1F300AB988B /* EditViewController.swift */,
 				06E36B65231FE9E600B9DF40 /* EditCell.swift */,
 				06EBC5C72324245C00FFF4AF /* IntesityViewController2.swift */,
+				06E4DC76235634E0005C05E9 /* CustomSegue.swift */,
+				06B64C7C236E0A1900E4E0D6 /* FilterList.swift */,
 			);
 			path = PhotoApp;
 			sourceTree = "<group>";
@@ -280,7 +278,6 @@
 				578E5B602263957B00F929F6 /* Filters.swift */,
 				575741A2226CDC3D00CB4D55 /* CustomFilters.swift */,
 				5757B7A52288A332004A2DFB /* FinishFilter.swift */,
-				575500E222A6FACE0050878A /* Parameters.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -505,22 +502,21 @@
 				5782174822318B3F0047B536 /* ViewController.swift in Sources */,
 				57796A242285E888008082F6 /* DataHolder.swift in Sources */,
 				57B4FF1B226A2AF500981207 /* SelectPhotoViewController.swift in Sources */,
+				06E4DC77235634E0005C05E9 /* CustomSegue.swift in Sources */,
 				575571522289EF0E00F04310 /* SaveViewController.swift in Sources */,
 				575741A3226CDC3D00CB4D55 /* CustomFilters.swift in Sources */,
 				575741AB226E420800CB4D55 /* Repository.swift in Sources */,
 				576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */,
-				575500E322A6FACE0050878A /* Parameters.swift in Sources */,
 				5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */,
 				575741A6226E288300CB4D55 /* FiltersEntity.swift in Sources */,
 				06E36B66231FE9E600B9DF40 /* EditCell.swift in Sources */,
 				57B4FF192268BC3F00981207 /* FilterCell.swift in Sources */,
+				06B64C7D236E0A1900E4E0D6 /* FilterList.swift in Sources */,
 				578E5B612263957B00F929F6 /* Filters.swift in Sources */,
 				579EA96D22495A9C001A2261 /* EditorViewController.swift in Sources */,
 				5757B7A82288A3D9004A2DFB /* FinishFilterEntity.swift in Sources */,
 				06EBC5C82324245C00FFF4AF /* IntesityViewController2.swift in Sources */,
-				57572F2322A8507000A24158 /* ParameterEntity.swift in Sources */,
 				575741AF226E460000CB4D55 /* LocalCustomFiltersRepository.swift in Sources */,
-				5753D8462252998F00039CD9 /* AlertService.swift in Sources */,
 				5757B7A62288A332004A2DFB /* FinishFilter.swift in Sources */,
 				575741A8226E28BD00CB4D55 /* CustomFiltersEntity.swift in Sources */,
 				5782174622318B3F0047B536 /* AppDelegate.swift in Sources */,

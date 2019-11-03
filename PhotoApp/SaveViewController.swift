@@ -19,10 +19,11 @@ class SaveViewController: UIViewController {
         let compresedImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compresedImage!, nil, nil, nil)
         
-        let alert = UIAlertController(title: "Saved", message: "Your image has been saved", preferredStyle: .alert)
+        /*let alert = UIAlertController(title: "Saved", message: "Your image has been saved", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(okAction)
-        self.present(alert, animated: true,completion: nil)
+        self.present(alert, animated: true,completion: nil)*/
+        
         performSegue(withIdentifier: "showSelect", sender: self)
     }
     override func viewDidLoad() {

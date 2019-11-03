@@ -16,41 +16,47 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     internal var repository: LocalFinishFiltersRepository!
     internal var customRepository: LocalCustomFiltersRepository!
     internal var filterrepository: LocalFiltersRepository!
-    var input: PHContentEditingInput?
-    var imageOrientation: Int32?
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var collectionView: UICollectionView!
     var realImage: UIImage?
     var realImage2: UIImage?
-    @IBOutlet var intensity:UISlider!
-    @IBOutlet var addButton: UIButton?
     var inputIntensity = 0.5
     var currentFilterName = ""
     var filterName = ""
     var filtarId = ""
     var intensityPrameter: Double = 0.0
     var position: Int = -1
-    var position2: Int = -1
     let context = CIContext(options: nil)
     var isTrue = false
+    var input: PHContentEditingInput?
+    var imageOrientation: Int32?
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var intensity:UISlider!
+    @IBOutlet var addButton: UIButton?
+    @IBOutlet var lab: UILabel?
+    
     
     @IBAction func finishButton(_ sender: Any) {
         performSegue(withIdentifier: "showSave", sender: self)
     }
+    
     @IBAction func cancelButton(_ sender: Any) {
         //self.repository.deleteAll()
         DataHolder.sharedInstance.customFilters = []
         performSegue(withIdentifier: "showSelec", sender: self)
     }
     
-    @IBAction func slider(_ sender: Any) {
+    @IBAction func slider(_ sender: UISlider) {
+        lab?.text = String(sender.value)
         if isTrue == true {
+            //DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
             DataHolder.sharedInstance.filters[position].parameters = Double(intensity.value)
                 imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: DataHolder.sharedInstance.filters)
         }
-         
         if isTrue == false {
-        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: (DataHolder.sharedInstance.realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
+            //DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
+            imageView.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: nil, currentFilter: currentFilterName, parameters: Double(intensity.value), name: filterName)
+            print(intensity!.value)
+            print(sender.value)
         }
     }
     
@@ -81,36 +87,34 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         filterrepository.create(a: filter)
         DataHolder.sharedInstance.realImage = imageView.image
         addButton?.isHidden = true
+        collectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.reloadData()
+        imageView.image = DataHolder.sharedInstance.realImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
+        
         repository = LocalFinishFiltersRepository()
+        customRepository = LocalCustomFiltersRepository()
+        filterrepository = LocalFiltersRepository()
         
         realImage = DataHolder.sharedInstance.realImage
         realImage2 = DataHolder.sharedInstance.realImage2
-        
-        customRepository = LocalCustomFiltersRepository()
-        filterrepository = LocalFiltersRepository()
         
         imageView.image = DataHolder.sharedInstance.realImage
         
         addButton?.isHidden = true
         intensity?.isHidden = true
         
-        let originalImg = Filters(id: UUID().uuidString, currentFilter: "originalImag", name: "Original", parameters: 0)
-        let sepia = Filters(id: UUID().uuidString, currentFilter: "CISepiaTone", name: "Sepia", parameters: 0.5)
-        let falseColor = Filters(id: UUID().uuidString, currentFilter: "CIFalseColor", name: "FalseColor", parameters: 1)
-        let morphologyGradient = Filters(id: UUID().uuidString, currentFilter: "CIMorphologyGradient", name: "MorphologyGradient", parameters: 1)
-        let gammaAdjust = Filters(id: UUID().uuidString, currentFilter: "CIGammaAdjust", name: "CIGammaAdjust", parameters: 0.4)
-        let sepia2 = Filters(id: UUID().uuidString, currentFilter: "CISepiaTone", name: "Sepia", parameters: 1)
-        
-        filters.append(originalImg)
-        filters.append(sepia)
-        filters.append(morphologyGradient)
-        filters.append(gammaAdjust)
-        filters.append(falseColor)
-        filters.append(sepia2)
+        FilterList.shared.filters()
+        filters = FilterList.shared.filterlist
     }
     
     override func didReceiveMemoryWarning() {
@@ -130,10 +134,13 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filters.count
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
         let cell: FilterCell =
         collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! FilterCell
         let filter = filters[indexPath.row]
@@ -144,9 +151,10 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
                 cell.imageFilter.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: (DataHolder.sharedInstance.realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: 0, name:filters[indexPath.row].name)
             }
         }
-        cell.imageFilter.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: (DataHolder.sharedInstance.realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)
+        cell.imageFilter.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: (imageView.image?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: filters[indexPath.row].parameters, name:filters[indexPath.row].name)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         addButton?.isHidden = false
         isTrue = false
@@ -156,6 +164,34 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
         filterName = filters[indexPath.row].name
         intensityPrameter = filters[indexPath.row].parameters
         intensity.value = Float(filters[indexPath.row].parameters)
+        
+        if filters[indexPath.row].name == "MorphologyGradient" {
+            intensity.minimumValue = 1
+            intensity.maximumValue = 3
+            intensity!.value = Float(intensityPrameter)
+            print("MorphologyGradient")
+            print(intensity.minimumValue)
+            print(intensity.maximumValue)
+            print(intensity!.value)
+        }
+        if filters[indexPath.row].name == "Sepia" {
+            intensity.minimumValue = 0
+            intensity.maximumValue = 1
+            intensity!.value = Float(intensityPrameter)
+            print("Sepia")
+            print(intensity.minimumValue)
+            print(intensity.maximumValue)
+            print(intensity!.value)
+        }
+        if filters[indexPath.row].name == "FalseColor" {
+            intensity.minimumValue = 0.3
+            intensity.maximumValue = 1.3
+            intensity!.value = Float(intensityPrameter)
+            print("FalseColor")
+            print(intensity.minimumValue)
+            print(intensity.maximumValue)
+            print(intensity!.value)
+        }
         
         position = -1
         print("POSITION 1")
@@ -174,7 +210,7 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
             imageView.image = DataHolder.sharedInstance.addFilter(inputImage: image!, orientation: (image?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: filters[indexPath.row].currentFilter, parameters: intensityPrameter, name: filters[indexPath.row].name)
                    collectionView.deselectItem(at: indexPath, animated: false)
         }
-       
+        
         if currentFilterName == "originalImag"{
             addButton?.isHidden = true
             intensity?.isHidden = true

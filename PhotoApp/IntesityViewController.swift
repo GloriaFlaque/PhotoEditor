@@ -9,11 +9,10 @@
 import UIKit
 import RealmSwift
 
-class IntesityViewController: UIViewController, DataHolderDelegate {
+class IntesityViewController: UIViewController {
     internal var customFilter:[CustomFilters] = []
     internal var repository: LocalCustomFiltersRepository!
     internal var filterrepository: LocalFiltersRepository!
-    //weak var delegate: IntesityViewControllerDelegate?
     @IBOutlet var addButton: UIButton?
     var currentFilterName = ""
     var filterName = ""
@@ -23,10 +22,18 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     @IBOutlet var intensity:UISlider!
     var value: Float?
     var position: Int = -1
+    var isTrue = false
     
     
     @IBAction func slider(_ sender: Any) {
-        imageView.image = DataHolder.sharedInstance.addFilter(inputImage: realImage!, orientation: (realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
+        if isTrue == true {
+            DataHolder.sharedInstance.filters[position].parameters = Double(intensity.value)
+                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: DataHolder.sharedInstance.filters)
+        }
+        
+        if isTrue == false {
+        imageView.image = DataHolder.sharedInstance.addEdit(inputImage: realImage!, orientation: (realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
+        }
     }
     
     @IBOutlet weak var imageView: UIImageView!
@@ -36,9 +43,14 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     }
     
     @IBAction func addButton(_ sender: Any) {
+        position = -1
+        print("POSITION 1")
+        print(position)
         for i in DataHolder.sharedInstance.filters {
-            position = +1
+            position = position + 1
             if i.name == filterName {
+                print("POSITION 2")
+                print(position)
                 DataHolder.sharedInstance.filters.remove(at: position)
             }
         }
@@ -49,8 +61,6 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
         self.performSegue(withIdentifier: "showMEdit", sender: self)
         print(DataHolder.sharedInstance.filters)
         print(intensity!.value)
-        print(filter.name)
-        print(filter.parameters)
     }
     
     convenience init(filter: String){
@@ -59,10 +69,28 @@ class IntesityViewController: UIViewController, DataHolderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = realImage
         repository = LocalCustomFiltersRepository()
         filterrepository = LocalFiltersRepository()
         intensity.value = Float(intensityPrameter)
+        
+        position = -1
+        print("POSITION 1")
+        print(position)
+        for i in DataHolder.sharedInstance.filters {
+            position = position + 1
+            if i.name == filterName {
+                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: DataHolder.sharedInstance.filters)
+                
+                intensity.value = Float(i.parameters)
+                print(i.parameters)
+                isTrue = true
+            }
+        }
+        
+        if isTrue == false {
+            intensity.value = Float(intensityPrameter)
+            imageView.image = DataHolder.sharedInstance.addEdit(inputImage: realImage!, orientation: (realImage?.imageOrientation.self).map { Int32($0.rawValue) }, currentFilter: currentFilterName, parameters: intensityPrameter, name: filterName)
+        }
     }
 
 }

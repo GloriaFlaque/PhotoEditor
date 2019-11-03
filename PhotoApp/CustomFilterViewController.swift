@@ -14,13 +14,12 @@ class CustomFilterViewController: UIViewController {
     internal var finishFilters: [FinishFilter] = []
     internal var repository: LocalFinishFiltersRepository!
     internal var filterrepository: LocalFiltersRepository!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var collectionView: UICollectionView!
     var realImage: UIImage?
     let context = CIContext(options: nil)
     var count: Date!
     var finishFilters2: FinishFilter! = nil
-    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func deleteFilter(_ sender: Any) {
         if count != nil {
@@ -35,9 +34,11 @@ class CustomFilterViewController: UIViewController {
         //DataHolder.sharedInstance.filters.removeAll()
         performSegue(withIdentifier: "showSelectCu", sender: self)
     }
+    
     @IBAction func saveButton(_ sender: Any) {
         performSegue(withIdentifier: "showSaveC", sender: self)
     }
+    
     @IBAction func newFilter(_ sender: Any) {
         let finishFilter = FinishFilter(id: UUID().uuidString, filters: DataHolder.sharedInstance.filters, date: Date())
         self.repository.create(a: finishFilter)
@@ -47,16 +48,20 @@ class CustomFilterViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        finishFilters = repository.getAll()
-        collectionView.reloadData()
+        imageView.image = DataHolder.sharedInstance.realImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
+        
         repository = LocalFinishFiltersRepository()
         filterrepository = LocalFiltersRepository()
-        //finishFilters = repository.getAll()
+        
+        finishFilters = repository.getAll()
+        collectionView.reloadData()
         
         imageView.image = DataHolder.sharedInstance.realImage
         realImage = DataHolder.sharedInstance.realImage
@@ -105,6 +110,9 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
         imageView.image = DataHolder.sharedInstance.realImage
         DataHolder.sharedInstance.filters = []
         DataHolder.sharedInstance.filters = finishFilters2.filters
+        
+        //let vc = EditorViewController()
+        //vc.imageView.image = DataHolder.sharedInstance.realImage
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

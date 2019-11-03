@@ -10,4 +10,5 @@ import UIKit
 
 class EditCell: UICollectionViewCell {
     @IBOutlet weak var filterName: UILabel!
+    @IBOutlet weak var filterimage: UIImageView!
 }
