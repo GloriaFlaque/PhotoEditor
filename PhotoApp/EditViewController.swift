@@ -76,7 +76,7 @@ class EditViewController: UIViewController {
                 DataHolder.sharedInstance.filters.remove(at: position)
             }
         }
-        let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value))
+        let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value), selected: false)
         DataHolder.sharedInstance.filters.append(filter)
         filterrepository.create(a: filter)
         DataHolder.sharedInstance.realImage = imageView.image
@@ -94,21 +94,6 @@ class EditViewController: UIViewController {
         
         print("PARAMETRO!!")
         print(filter.parameters)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let intensityVC = segue.destination as? IntesityViewController {
-            intensityVC.realImage = imageView.image
-            intensityVC.currentFilterName = currentFilterName
-            intensityVC.filterName = filterName
-            intensityVC.intensityPrameter = intensityPrameter
-        }
-        if let intensityVC2 = segue.destination as? IntesityViewController2 {
-            intensityVC2.realImage = imageView.image
-            intensityVC2.currentFilterName = currentFilterName
-            intensityVC2.filterName = filterName
-            intensityVC2.intensityPrameter = intensityPrameter
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,22 +121,6 @@ class EditViewController: UIViewController {
         FilterList.shared.editTools()
         filters = FilterList.shared.editList
     }
-    
-    func showIntensity(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let intensityVC = segue.destination as? IntesityViewController else { return }
-        intensityVC.realImage = imageView.image
-        intensityVC.currentFilterName = currentFilterName
-        intensityVC.filterName = filterName
-    }
-    
-    func showIntensity2(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let intensityVC2 = segue.destination as? IntesityViewController2 else { return }
-        intensityVC2.realImage = imageView.image
-        intensityVC2.currentFilterName = currentFilterName
-        intensityVC2.filterName = filterName
-    }
-    
-   
     
 }
 extension EditViewController: UICollectionViewDataSource, UICollectionViewDelegate {

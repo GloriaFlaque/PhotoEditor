@@ -6,13 +6,6 @@ target 'PhotoApp' do
   use_frameworks!
 
   # Pods for PhotoApp
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/Database'
-  pod 'Firebase/Storage'
-  pod 'FirebaseUI/Auth'
   pod 'RealmSwift'
 
 end

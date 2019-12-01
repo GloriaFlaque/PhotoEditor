@@ -31,8 +31,10 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var intensity:UISlider!
+    @IBOutlet var cancelButton: UIButton?
+    @IBOutlet var saveButton: UIButton?
     @IBOutlet var addButton: UIButton?
-    @IBOutlet var lab: UILabel?
+    @IBOutlet var cancelButton2: UIButton?
     
     
     @IBAction func finishButton(_ sender: Any) {
@@ -46,7 +48,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func slider(_ sender: UISlider) {
-        lab?.text = String(sender.value)
         if isTrue == true {
             //DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
             DataHolder.sharedInstance.filters[position].parameters = Double(intensity.value)
@@ -57,16 +58,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             imageView.image = DataHolder.sharedInstance.addFilter(inputImage: DataHolder.sharedInstance.realImage!, orientation: nil, currentFilter: currentFilterName, parameters: Double(intensity.value), name: filterName)
             print(intensity!.value)
             print(sender.value)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let intensityVC = segue.destination as? IntesityViewController {
-            intensityVC.realImage = imageView.image
-            intensityVC.currentFilterName = currentFilterName
-            intensityVC.filterName = filterName
-            intensityVC.filterId = filtarId
-            intensityVC.intensityPrameter = intensityPrameter
         }
     }
     
@@ -82,12 +73,32 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
                 DataHolder.sharedInstance.filters.remove(at: position)
             }
         }
-        let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value))
+        let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value), selected: false)
         DataHolder.sharedInstance.filters.append(filter)
         filterrepository.create(a: filter)
         DataHolder.sharedInstance.realImage = imageView.image
-        addButton?.isHidden = true
         collectionView.reloadData()
+        
+        self.tabBarController?.tabBar.isHidden = false
+        cancelButton?.isHidden = false
+        saveButton?.isHidden = false
+        collectionView.isHidden = false
+        
+        cancelButton2?.isHidden = true
+        addButton?.isHidden = true
+        intensity?.isHidden = true
+    }
+    
+    @IBAction func cancelButton2(_ sender: Any) {
+        imageView.image = DataHolder.sharedInstance.realImage
+        self.tabBarController?.tabBar.isHidden = false
+        cancelButton?.isHidden = false
+        saveButton?.isHidden = false
+        collectionView.isHidden = false
+        
+        cancelButton2?.isHidden = true
+        addButton?.isHidden = true
+        intensity?.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,14 +131,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    func showIntensity(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let intensityVC = segue.destination as? IntesityViewController else { return }
-        intensityVC.realImage = imageView.image
-        intensityVC.currentFilterName = currentFilterName
-        intensityVC.filterName = filterName
-        intensityVC.filterId = filtarId
-        intensityVC.intensityPrameter = intensityPrameter
-    }
 }
 
 extension EditorViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -158,6 +161,22 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         addButton?.isHidden = false
         isTrue = false
+        
+        let task = self.filters[indexPath.row]
+        
+        if(task.selected == true){
+            self.tabBarController?.tabBar.isHidden = true
+            cancelButton?.isHidden = true
+            saveButton?.isHidden = true
+            collectionView.isHidden = true
+            
+            cancelButton2?.isHidden = false
+            addButton?.isHidden = false
+            intensity?.isHidden = false
+            task.selected = false
+        }
+        
+        task.selected = true
         
         let image = DataHolder.sharedInstance.realImage
         currentFilterName = filters[indexPath.row].currentFilter
@@ -211,21 +230,11 @@ extension EditorViewController: UICollectionViewDataSource, UICollectionViewDele
                    collectionView.deselectItem(at: indexPath, animated: false)
         }
         
-        if currentFilterName == "originalImag"{
-            addButton?.isHidden = true
-            intensity?.isHidden = true
-        }
-        else {
-            addButton?.isHidden = false
-            intensity?.isHidden = false
-        }
-        
         let cell = collectionView.cellForItem(at: indexPath)
         if currentFilterName != "originalImag" {
             cell?.isHighlighted = true
             
         }
-        //performSegue(withIdentifier: "showIntensity", sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

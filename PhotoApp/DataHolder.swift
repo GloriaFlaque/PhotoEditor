@@ -19,7 +19,6 @@ class DataHolder: NSObject {
     var filters: [Filters] = []
     var actualFinishFilter: [Filters] = []
     var customFilters: [CustomFilters] = []
-    //var parameters: [Double] = []
     
     let context = CIContext(options: nil)
     

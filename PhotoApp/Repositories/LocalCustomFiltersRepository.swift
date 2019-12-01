@@ -29,7 +29,7 @@ class LocalCustomFiltersRepository: NSObject{
             let realm = try Realm()
             let entity = CustomFiltersEntity(customFilters: a)
             try realm.write {
-                realm.add(entity, update: true)
+                realm.add(entity, update: .all)
             }
         }
         catch {

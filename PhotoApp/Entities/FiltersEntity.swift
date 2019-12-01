@@ -14,7 +14,7 @@ class FiltersEntity: Object {
     @objc dynamic var currentFilter = ""
     @objc dynamic var name = ""
     @objc dynamic var parameters: Double = 0.0
-    //var parameters: [Any] = []
+    @objc dynamic var selected: Bool = false
     
     override static func primaryKey() -> String?{
         return "id"
@@ -25,16 +25,10 @@ class FiltersEntity: Object {
         self.currentFilter = filters.currentFilter
         self.name = filters.name
         self.parameters = filters.parameters
-        /*for parameter in parameters{
-            self.parameters.append(parameter)
-        }*/
+        self.selected = filters.selected
     }
     func filtersModel() -> Filters {
-        /*var parametersArray: [Any] = []
-        for parameter in parameters{
-            parametersArray.append(parameter)
-        }*/
-        let model = Filters(id: self.id, currentFilter: self.currentFilter, name: self.name, parameters: self.parameters)
+        let model = Filters(id: self.id, currentFilter: self.currentFilter, name: self.name, parameters: self.parameters, selected: self.selected)
         return model
     }
 }

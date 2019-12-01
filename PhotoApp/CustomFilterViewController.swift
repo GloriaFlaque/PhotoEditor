@@ -30,8 +30,6 @@ class CustomFilterViewController: UIViewController {
     }
     
     @IBAction func cancelButton(_ sender: Any) {
-        //self.repository.deleteAll()
-        //DataHolder.sharedInstance.filters.removeAll()
         performSegue(withIdentifier: "showSelectCu", sender: self)
     }
     
@@ -110,9 +108,6 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
         imageView.image = DataHolder.sharedInstance.realImage
         DataHolder.sharedInstance.filters = []
         DataHolder.sharedInstance.filters = finishFilters2.filters
-        
-        //let vc = EditorViewController()
-        //vc.imageView.image = DataHolder.sharedInstance.realImage
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

@@ -29,7 +29,7 @@ class LocalFinishFiltersRepository: NSObject {
             let realm = try Realm()
             let entity = FinishFilterEntity(id: a.id, date: a.date, filters: a.filters)
             try realm.write {
-                realm.add(entity, update: true)
+                realm.add(entity, update: .all)
             }
         }
         catch {
