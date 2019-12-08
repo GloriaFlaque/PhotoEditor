@@ -18,7 +18,6 @@ class DataHolder: NSObject {
     var originalImg: UIImage?
     var filters: [Filters] = []
     var actualFinishFilter: [Filters] = []
-    var customFilters: [CustomFilters] = []
     
     let context = CIContext(options: nil)
     

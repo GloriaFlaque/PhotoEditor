@@ -10,14 +10,13 @@ import UIKit
 
 class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
-    var realImage: UIImage?
-    internal var filterrepository: LocalFiltersRepository!
-    internal var repository: LocalFinishFiltersRepository!
     @IBOutlet var nextButton: UIButton?
-    //@IBOutlet var selectButton: UIButton?
     @IBOutlet var libraryButton: UIButton?
     @IBOutlet var cameraButton: UIButton?
     
+    var realImage: UIImage?
+    internal var filterrepository: LocalFiltersRepository!
+    internal var repository: LocalFinishFiltersRepository!
     
     @IBAction func next(_ sender: Any) {
         if imageView.image == realImage {
@@ -44,15 +43,13 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         filterrepository = LocalFiltersRepository()
         repository = LocalFinishFiltersRepository()
-        
         AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
-        
         nextButton?.isHidden = true
     }
     
     func showImagePickerController(SourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self 
+        imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = SourceType
         present(imagePickerController, animated: true, completion: nil)
@@ -60,12 +57,10 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         nextButton?.isHidden = false
-        //selectButton?.isHidden = true
         libraryButton?.isHidden = true
         cameraButton?.isHidden = true
         realImage = (info[UIImagePickerController.InfoKey.originalImage]! as! UIImage)
         imageView.image = realImage
-        
         picker.dismiss(animated: true, completion: nil)
     }
     
