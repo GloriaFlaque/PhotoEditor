@@ -9,14 +9,12 @@
 import UIKit
 
 class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    internal var realImage: UIImage?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet var nextButton: UIButton?
     @IBOutlet var libraryButton: UIButton?
     @IBOutlet var cameraButton: UIButton?
-    
-    var realImage: UIImage?
-    internal var filterrepository: LocalFiltersRepository!
-    internal var repository: LocalFinishFiltersRepository!
     
     @IBAction func next(_ sender: Any) {
         if imageView.image == realImage {
@@ -41,8 +39,6 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterrepository = LocalFiltersRepository()
-        repository = LocalFinishFiltersRepository()
         AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
         nextButton?.isHidden = true
     }
@@ -67,8 +63,8 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
 }

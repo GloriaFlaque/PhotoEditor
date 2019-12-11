@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import CoreImage
-import MetalKit
 
 class DataHolder: NSObject {
     
@@ -21,47 +19,46 @@ class DataHolder: NSObject {
     
     let context = CIContext(options: nil)
     
-    func addFilter(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Double, name: String) -> UIImage? {
+    func addFilter(inputImage: UIImage, currentFilter: String, parameters: Double, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
-        if orientation != nil {
-            cimage = cimage?.oriented(forExifOrientation: orientation!)
-        }
         
         switch name {
         case "Sepia":
+            print("Sepia")
+            print(parameters)
             cimage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
                     kCIInputIntensityKey: parameters
                 ])
             
-        case "MorphologyGradient":
+        case "Morphology":
             cimage = cimage!.applyingFilter(
                 "CIMorphologyGradient",
                 parameters: [
                     "inputRadius": parameters
                 ])
             
-        case "FalseColor":
+        case "Black&White":
             cimage = cimage!.applyingFilter(
                 "CIFalseColor",
                 parameters: [
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
                     "inputColor1": CIColor(red: CGFloat(parameters) , green: CGFloat(parameters), blue: CGFloat(parameters))
                 ])
-        case "CIPhotoEffectChrome":
+        case "Chrome":
         cimage = cimage!.applyingFilter(
             "CIPhotoEffectChrome")
             
-        case "CIPhotoEffectFade":
+        case "Fade":
         cimage = cimage!.applyingFilter(
             "CIPhotoEffectFade")
             
-        case "CIPhotoEffectInstant":
+        case "Instant":
         cimage = cimage!.applyingFilter(
             "CIPhotoEffectInstant")
             
-        case "CIPhotoEffectMono":
+        case "Mono":
         cimage = cimage!.applyingFilter(
             "CIPhotoEffectMono")
         default: break
@@ -73,32 +70,29 @@ class DataHolder: NSObject {
     }
     
     
-    func addFilter2(inputImage: UIImage, orientation: Int32?, customFilter: [Filters]) -> UIImage? {
+    func addFilter2(inputImage: UIImage, customFilter: [Filters]) -> UIImage? {
         var cimage = CIImage(image: inputImage)
-        if orientation != nil {
-            cimage = cimage?.oriented(forExifOrientation: orientation!)
-        }
-        
         for i in customFilter {
             let parameters = i.parameters
             let name = i.name
         switch name {
         case "Sepia":
             print("Sepia creado")
+            print(parameters!)
             cimage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
                     kCIInputIntensityKey: parameters!
                 ])
         
-        case "MorphologyGradient":
+        case "Morphology":
         cimage = cimage!.applyingFilter(
             "CIMorphologyGradient",
             parameters: [
                 "inputRadius": parameters!
             ])
             
-        case "FalseColor":
+        case "Black&White":
             print("FalseColor creado")
             cimage = cimage!.applyingFilter(
                 "CIFalseColor",
@@ -106,6 +100,22 @@ class DataHolder: NSObject {
                     "inputColor0": CIColor(red: 0, green: 0, blue: 0),
                     "inputColor1": CIColor(red: CGFloat(parameters!) , green: CGFloat(parameters!), blue: CGFloat(parameters!))
                 ])
+            
+        case "Chrome":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectChrome")
+            
+        case "Fade":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectFade")
+            
+        case "Instant":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectInstant")
+            
+        case "Mono":
+        cimage = cimage!.applyingFilter(
+            "CIPhotoEffectMono")
             
         case "Exposure":
         cimage = cimage!.applyingFilter(
@@ -124,6 +134,8 @@ class DataHolder: NSObject {
             ])
         
         case "Saturation":
+            print("saturation")
+            print(parameters!)
         cimage = cimage!.applyingFilter(
             "CIColorControls",
             parameters: [
@@ -142,6 +154,8 @@ class DataHolder: NSObject {
             ])
             
         case "Vignette":
+            print("Vignette")
+            print(parameters!)
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
@@ -215,15 +229,8 @@ class DataHolder: NSObject {
     
     
     
-    
-    
-    func addEdit(inputImage: UIImage, orientation: Int32?, currentFilter: String, parameters: Double, name: String) -> UIImage? {
+    func addEdit(inputImage: UIImage, currentFilter: String, parameters: Double, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
-        
-        if orientation != nil {
-            cimage = cimage?.oriented(forExifOrientation: orientation!)
-        }
-        
         switch name {
         case "Exposure":
         cimage = cimage!.applyingFilter(
@@ -242,6 +249,8 @@ class DataHolder: NSObject {
             ])
         
         case "Saturation":
+            print("SaturationEdit")
+            print(parameters)
         cimage = cimage!.applyingFilter(
             "CIColorControls",
             parameters: [
@@ -260,6 +269,8 @@ class DataHolder: NSObject {
             ])
             
         case "Vignette":
+            print("VignetteEdit")
+            print(parameters)
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
@@ -368,12 +379,6 @@ class DataHolder: NSObject {
     return img
     }
 }
-
-//@objc protocol DataHolderDelegate{
-     //@objc optional func DHDDaddFilter(blFin:Bool)
-//}
-
-
 
 
 

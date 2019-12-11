@@ -1,5 +1,5 @@
 //
-//  EditViewController.swift
+//  AdjustViewController.swift
 //  PhotoApp
 //
 //  Created by Gloris Flaqué García on 26/06/2019.
@@ -8,13 +8,14 @@
 
 import UIKit
 
-class EditViewController: UIViewController {
+class AdjustViewController: UIViewController {
     internal var filters:[Filters] = []
     internal var repository: LocalFinishFiltersRepository!
     internal var filterrepository: LocalFiltersRepository!
     var currentFilterName = ""
     var filterName = ""
     var intensityPrameter: Double = 0.0
+    var intensityBefore: Double = 0.0
     var position: Int = -1
     var position2: Int = -1
     var isTrue = false
@@ -32,14 +33,14 @@ class EditViewController: UIViewController {
     @IBAction func slider(_ sender: Any) {
         if isTrue == true {
             DataHolder.sharedInstance.filters[position2].parameters = Double(intensity.value)
-            imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: DataHolder.sharedInstance.filters)
+            imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: DataHolder.sharedInstance.filters)
             print(filters[position2].name)
             print(isTrue)
             print(intensity!.value)
         }
         
         if isTrue == false {
-        imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, orientation: nil, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
+        imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
             print(currentFilterName)
             print(isTrue)
             print(intensity!.value)
@@ -47,55 +48,44 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func finishButton(_ sender: Any) {
-        performSegue(withIdentifier: "showSaveE", sender: self)
+        performSegue(withIdentifier: "showSaveAdjust", sender: self)
     }
     
     @IBAction func cancelButton(_ sender: Any) {
-        performSegue(withIdentifier: "showSelectE", sender: self)
+        performSegue(withIdentifier: "showSelectAdjust", sender: self)
     }
     
     @IBAction func cancelButton2(_ sender: Any) {
+        if isTrue == true {
+           DataHolder.sharedInstance.filters[position2].parameters = intensityBefore
+        }
         imageView.image = DataHolder.sharedInstance.realImage
         self.tabBarController?.tabBar.isHidden = false
         cancelButton?.isHidden = false
         saveButton?.isHidden = false
         collectionView.isHidden = false
-        
         cancelButton2?.isHidden = true
         addButton?.isHidden = true
         intensity?.isHidden = true
     }
     
     @IBAction func addButton(_ sender: Any) {
-        position = -1
-        print("POSITION 1////")
-        print(position)
-        for i in DataHolder.sharedInstance.filters {
-            if i.name == filterName {
-                print("POSITION 2")
-                print(position)
-                position = position + 1
-                DataHolder.sharedInstance.filters.remove(at: position)
-            }
+        if isTrue != true {
+            let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value), selected: false)
+            DataHolder.sharedInstance.filters.append(filter)
+            filterrepository.create(a: filter)
         }
-        let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value), selected: false)
-        DataHolder.sharedInstance.filters.append(filter)
-        filterrepository.create(a: filter)
         DataHolder.sharedInstance.realImage = imageView.image
-        addButton?.isHidden = true
         collectionView.reloadData()
-        
         self.tabBarController?.tabBar.isHidden = false
         cancelButton?.isHidden = false
         saveButton?.isHidden = false
         collectionView.isHidden = false
-        
         cancelButton2?.isHidden = true
         addButton?.isHidden = true
         intensity?.isHidden = true
         
         print("PARAMETRO!!")
-        print(filter.parameters)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,7 +108,7 @@ class EditViewController: UIViewController {
     }
     
 }
-extension EditViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension AdjustViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filters.count
     }
@@ -128,8 +118,8 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: EditCell =
-            collectionView.dequeueReusableCell(withReuseIdentifier: "editCell", for: indexPath) as! EditCell
+        let cell: AdjustCell =
+            collectionView.dequeueReusableCell(withReuseIdentifier: "adjustCell", for: indexPath) as! AdjustCell
         let filter = filters[indexPath.row]
         cell.filterName.text = filter.name
         cell.filterimage.image = UIImage(named: filter.name)
@@ -219,8 +209,8 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             position = position + 1
             if i.name == filterName {
                 position2 = position
-                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: DataHolder.sharedInstance.filters)
-                
+                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: DataHolder.sharedInstance.filters)
+                intensityBefore = i.parameters
                 intensity.value = Float(i.parameters)
                 print("EL PARAMETROOOOOOO")
                 print(i.parameters)
@@ -229,7 +219,7 @@ extension EditViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
         }
         if isTrue == false {
-            imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, orientation: nil, currentFilter: currentFilterName, parameters: intensityPrameter, name: filterName)
+            imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, currentFilter: currentFilterName, parameters: intensityPrameter, name: filterName)
             print(isTrue)
         }
         self.tabBarController?.tabBar.isHidden = true

@@ -20,7 +20,7 @@ class MainTabBarController: UITabBarController {
         }
         
         for viewController in viewControllers {
-            let editorVC = viewController as? EditorViewController
+            let editorVC = viewController as? FiltersViewController
             let customFilterVC = viewController as? CustomFilterViewController
             editorVC?.realImage = realImage
             customFilterVC?.realImage = realImage

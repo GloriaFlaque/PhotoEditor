@@ -29,11 +29,11 @@ class CustomFilterViewController: UIViewController {
     }
     
     @IBAction func cancelButton(_ sender: Any) {
-        performSegue(withIdentifier: "showSelectCu", sender: self)
+        performSegue(withIdentifier: "showSelectCustom", sender: self)
     }
     
     @IBAction func saveButton(_ sender: Any) {
-        performSegue(withIdentifier: "showSaveC", sender: self)
+        performSegue(withIdentifier: "showSaveCustom", sender: self)
     }
     
     @IBAction func newFilter(_ sender: Any) {
@@ -83,7 +83,7 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
         let cell: CustomFilterCell =
             collectionView.dequeueReusableCell(withReuseIdentifier: "customFilterCell", for: indexPath) as! CustomFilterCell
         let finishFilters2 = finishFilters[indexPath.row]
-        cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
+        cell.customimageFilter.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: finishFilters2.filters)
         return cell
     }
     
@@ -97,16 +97,14 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
         cell?.layer.borderColor = UIColor.black.cgColor
         cell?.layer.borderWidth = 1.5
         cell?.isHighlighted = true
-        
-        DataHolder.sharedInstance.actualFinishFilter = []
-        DataHolder.sharedInstance.actualFinishFilter = finishFilters2.filters
-        
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.realImage2
-        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, orientation: nil, customFilter: finishFilters2.filters)
-        
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: finishFilters2.filters)
         imageView.image = DataHolder.sharedInstance.realImage
         DataHolder.sharedInstance.filters = []
-        DataHolder.sharedInstance.filters = finishFilters2.filters
+        for i in finishFilters2.filters {
+            let filter = Filters(id: UUID().uuidString, currentFilter: i.currentFilter, name: i.name, parameters: i.parameters, selected: false)
+            DataHolder.sharedInstance.filters.append(filter)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

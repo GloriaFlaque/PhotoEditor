@@ -16,12 +16,12 @@ class FilterList {
     func filters() {
         let originalImg = Filters(id: UUID().uuidString, currentFilter: "originalImag", name: "Original", parameters: 0, selected: false)
         let sepia = Filters(id: UUID().uuidString, currentFilter: "CISepiaTone", name: "Sepia", parameters: 0.5, selected: false)
-        let morphologyGradient = Filters(id: UUID().uuidString, currentFilter: "CIMorphologyGradient", name: "MorphologyGradient", parameters: 2, selected: false)
-        let falseColor = Filters(id: UUID().uuidString, currentFilter: "CIFalseColor", name: "FalseColor", parameters: 0.7, selected: false)
-        let effectChrome = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectChrome", name: "CIPhotoEffectChrome", parameters: 0, selected: false)
-        let effectFade = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectFade", name: "CIPhotoEffectFade", parameters: 0, selected: false)
-        let effectInstant = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectInstant", name: "CIPhotoEffectInstant", parameters: 0, selected: false)
-        let effectMono = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectMono", name: "CIPhotoEffectMono", parameters: 0, selected: false)
+        let morphologyGradient = Filters(id: UUID().uuidString, currentFilter: "CIMorphologyGradient", name: "Morphology", parameters: 2, selected: false)
+        let falseColor = Filters(id: UUID().uuidString, currentFilter: "CIFalseColor", name: "Black&White", parameters: 0.7, selected: false)
+        let effectChrome = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectChrome", name: "Chrome", parameters: 0, selected: false)
+        let effectFade = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectFade", name: "Fade", parameters: 0, selected: false)
+        let effectInstant = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectInstant", name: "Instant", parameters: 0, selected: false)
+        let effectMono = Filters(id: UUID().uuidString, currentFilter: "CIPhotoEffectMono", name: "Mono", parameters: 0, selected: false)
 
         
         filterlist.append(originalImg)

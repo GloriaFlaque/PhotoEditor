@@ -1,5 +1,5 @@
 //
-//  EditCell.swift
+//  AdjustCell.swift
 //  PhotoApp
 //
 //  Created by Gloris Flaqué García on 04/09/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditCell: UICollectionViewCell {
+class AdjustCell: UICollectionViewCell {
     @IBOutlet weak var filterName: UILabel!
     @IBOutlet weak var filterimage: UIImageView!
 }

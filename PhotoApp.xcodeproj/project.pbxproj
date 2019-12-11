@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0635D20E22C3C1F300AB988B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635D20D22C3C1F300AB988B /* EditViewController.swift */; };
+		0635D20E22C3C1F300AB988B /* AdjustViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635D20D22C3C1F300AB988B /* AdjustViewController.swift */; };
 		06B64C7D236E0A1900E4E0D6 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B64C7C236E0A1900E4E0D6 /* FilterList.swift */; };
-		06E36B66231FE9E600B9DF40 /* EditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E36B65231FE9E600B9DF40 /* EditCell.swift */; };
+		06E36B66231FE9E600B9DF40 /* AdjustCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E36B65231FE9E600B9DF40 /* AdjustCell.swift */; };
 		575571522289EF0E00F04310 /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575571512289EF0E00F04310 /* SaveViewController.swift */; };
 		5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5757419E226C9ED000CB4D55 /* MainTabBarController.swift */; };
 		575741A1226CAD6000CB4D55 /* CustomFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */; };
@@ -26,7 +26,7 @@
 		5782174D22318B420047B536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5782174C22318B420047B536 /* Assets.xcassets */; };
 		5782175022318B420047B536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5782174E22318B420047B536 /* LaunchScreen.storyboard */; };
 		578E5B612263957B00F929F6 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578E5B602263957B00F929F6 /* Filters.swift */; };
-		579EA96D22495A9C001A2261 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA96C22495A9C001A2261 /* EditorViewController.swift */; };
+		579EA96D22495A9C001A2261 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA96C22495A9C001A2261 /* FiltersViewController.swift */; };
 		57B4FF192268BC3F00981207 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B4FF182268BC3F00981207 /* FilterCell.swift */; };
 		57B4FF1B226A2AF500981207 /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B4FF1A226A2AF500981207 /* SelectPhotoViewController.swift */; };
 		869387B20B75A673C4221FD9 /* Pods_PhotoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69469E0642FCBAEA2A7B218F /* Pods_PhotoApp.framework */; };
@@ -46,9 +46,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0635D20D22C3C1F300AB988B /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		0635D20D22C3C1F300AB988B /* AdjustViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustViewController.swift; sourceTree = "<group>"; };
 		06B64C7C236E0A1900E4E0D6 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
-		06E36B65231FE9E600B9DF40 /* EditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCell.swift; sourceTree = "<group>"; };
+		06E36B65231FE9E600B9DF40 /* AdjustCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustCell.swift; sourceTree = "<group>"; };
 		575571512289EF0E00F04310 /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 		5757419E226C9ED000CB4D55 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		575741A0226CAD6000CB4D55 /* CustomFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterViewController.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 		5782175C22318C630047B536 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		5782175E22318C630047B536 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		578E5B602263957B00F929F6 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Filters.swift; path = PhotoApp/Filters.swift; sourceTree = SOURCE_ROOT; };
-		579EA96C22495A9C001A2261 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
+		579EA96C22495A9C001A2261 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		57B4FF182268BC3F00981207 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		57B4FF1A226A2AF500981207 /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
 		69469E0642FCBAEA2A7B218F /* Pods_PhotoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,22 +98,22 @@
 			path = TabBarController;
 			sourceTree = "<group>";
 		};
-		06BFF175239A9CD500B098BC /* Edit */ = {
+		06BFF175239A9CD500B098BC /* Adjust */ = {
 			isa = PBXGroup;
 			children = (
-				0635D20D22C3C1F300AB988B /* EditViewController.swift */,
-				06E36B65231FE9E600B9DF40 /* EditCell.swift */,
+				0635D20D22C3C1F300AB988B /* AdjustViewController.swift */,
+				06E36B65231FE9E600B9DF40 /* AdjustCell.swift */,
 			);
-			path = Edit;
+			path = Adjust;
 			sourceTree = "<group>";
 		};
-		06BFF176239A9D0B00B098BC /* Filter */ = {
+		06BFF176239A9D0B00B098BC /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				579EA96C22495A9C001A2261 /* EditorViewController.swift */,
+				579EA96C22495A9C001A2261 /* FiltersViewController.swift */,
 				57B4FF182268BC3F00981207 /* FilterCell.swift */,
 			);
-			path = Filter;
+			path = Filters;
 			sourceTree = "<group>";
 		};
 		06BFF177239A9D1D00B098BC /* CustomFilter */ = {
@@ -197,8 +197,8 @@
 				5782175122318B420047B536 /* Info.plist */,
 				06F1DD092393EF1B007F52E8 /* Selector */,
 				06BFF174239A9CB100B098BC /* TabBarController */,
-				06BFF175239A9CD500B098BC /* Edit */,
-				06BFF176239A9D0B00B098BC /* Filter */,
+				06BFF175239A9CD500B098BC /* Adjust */,
+				06BFF176239A9D0B00B098BC /* Filters */,
 				06BFF177239A9D1D00B098BC /* CustomFilter */,
 				06BFF178239A9D3100B098BC /* Save */,
 				57796A232285E888008082F6 /* DataHolder.swift */,
@@ -343,7 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0635D20E22C3C1F300AB988B /* EditViewController.swift in Sources */,
+				0635D20E22C3C1F300AB988B /* AdjustViewController.swift in Sources */,
 				57796A242285E888008082F6 /* DataHolder.swift in Sources */,
 				57B4FF1B226A2AF500981207 /* SelectPhotoViewController.swift in Sources */,
 				575571522289EF0E00F04310 /* SaveViewController.swift in Sources */,
@@ -351,11 +351,11 @@
 				576402C0227F5DEE00C8C1B3 /* CustomFilterCell.swift in Sources */,
 				5757419F226C9ED000CB4D55 /* MainTabBarController.swift in Sources */,
 				575741A6226E288300CB4D55 /* FiltersEntity.swift in Sources */,
-				06E36B66231FE9E600B9DF40 /* EditCell.swift in Sources */,
+				06E36B66231FE9E600B9DF40 /* AdjustCell.swift in Sources */,
 				57B4FF192268BC3F00981207 /* FilterCell.swift in Sources */,
 				06B64C7D236E0A1900E4E0D6 /* FilterList.swift in Sources */,
 				578E5B612263957B00F929F6 /* Filters.swift in Sources */,
-				579EA96D22495A9C001A2261 /* EditorViewController.swift in Sources */,
+				579EA96D22495A9C001A2261 /* FiltersViewController.swift in Sources */,
 				5757B7A82288A3D9004A2DFB /* FinishFilterEntity.swift in Sources */,
 				5757B7A62288A332004A2DFB /* FinishFilter.swift in Sources */,
 				5782174622318B3F0047B536 /* AppDelegate.swift in Sources */,
