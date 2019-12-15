@@ -12,13 +12,11 @@ class Filters {
     var currentFilter: String!
     var name: String!
     var parameters: Double!
-    var selected: Bool!
     
-    init(id: String, currentFilter: String,name: String, parameters: Double, selected: Bool) {
+    init(id: String, currentFilter: String,name: String, parameters: Double) {
       self.id = id
       self.currentFilter = currentFilter
       self.name = name
       self.parameters = parameters
-      self.selected = selected
     }
 }

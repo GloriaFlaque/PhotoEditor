@@ -13,6 +13,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet var nextButton: UIButton?
+    @IBOutlet var cancelButton: UIButton?
     @IBOutlet var libraryButton: UIButton?
     @IBOutlet var cameraButton: UIButton?
     
@@ -20,6 +21,14 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
         if imageView.image == realImage {
             performSegue(withIdentifier: "photoSelected", sender: self)
         }
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        cancelButton?.isHidden = true
+        nextButton?.isHidden = true
+        libraryButton?.isHidden = false
+        cameraButton?.isHidden = false
+        imageView.image = nil
     }
     
     @IBAction func libraryPhoto(_ sender: Any) {
@@ -31,8 +40,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let mainTBC = segue.destination as! MainTabBarController
-        mainTBC.realImage = imageView.image
+        //let mainTBC = segue.destination as! MainTabBarController
         DataHolder.sharedInstance.realImage = imageView.image
         DataHolder.sharedInstance.realImage2 = imageView.image
     }
@@ -40,6 +48,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+        cancelButton?.isHidden = true
         nextButton?.isHidden = true
     }
     
@@ -53,6 +62,7 @@ class SelectPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         nextButton?.isHidden = false
+        cancelButton?.isHidden = false
         libraryButton?.isHidden = true
         cameraButton?.isHidden = true
         realImage = (info[UIImagePickerController.InfoKey.originalImage]! as! UIImage)

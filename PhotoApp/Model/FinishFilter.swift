@@ -9,7 +9,6 @@
 import Foundation
 class FinishFilter {
     var id: String!
-    //var customFilters: [CustomFilters] = []
     var filters: [Filters] = []
     var date: Date!
     

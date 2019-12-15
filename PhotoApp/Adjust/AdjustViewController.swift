@@ -9,41 +9,29 @@
 import UIKit
 
 class AdjustViewController: UIViewController {
-    internal var filters:[Filters] = []
-    internal var repository: LocalFinishFiltersRepository!
-    internal var filterrepository: LocalFiltersRepository!
     var currentFilterName = ""
     var filterName = ""
-    var intensityPrameter: Double = 0.0
+    var intensityParameter: Double = 0.0
     var intensityBefore: Double = 0.0
     var position: Int = -1
     var position2: Int = -1
     var isTrue = false
-    var realImage: UIImage?
-    var realImage2: UIImage?
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var intensity:UISlider!
     @IBOutlet var cancelButton: UIButton?
     @IBOutlet var saveButton: UIButton?
-    @IBOutlet var cancelButton2: UIButton?
     @IBOutlet var addButton: UIButton?
-    @IBOutlet var intensity:UISlider!
+    @IBOutlet var cancelButton2: UIButton?
     
     @IBAction func slider(_ sender: Any) {
         if isTrue == true {
             DataHolder.sharedInstance.filters[position2].parameters = Double(intensity.value)
             imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: DataHolder.sharedInstance.filters)
-            print(filters[position2].name)
-            print(isTrue)
-            print(intensity!.value)
         }
         
         if isTrue == false {
         imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, currentFilter: currentFilterName, parameters: Double(intensity!.value), name: filterName)
-            print(currentFilterName)
-            print(isTrue)
-            print(intensity!.value)
         }
     }
     
@@ -53,6 +41,7 @@ class AdjustViewController: UIViewController {
     
     @IBAction func cancelButton(_ sender: Any) {
         performSegue(withIdentifier: "showSelectAdjust", sender: self)
+        DataHolder.sharedInstance.filters = []
     }
     
     @IBAction func cancelButton2(_ sender: Any) {
@@ -70,10 +59,9 @@ class AdjustViewController: UIViewController {
     }
     
     @IBAction func addButton(_ sender: Any) {
-        if isTrue != true {
-            let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value), selected: false)
+        if isTrue == false {
+            let filter = Filters(id: UUID().uuidString, currentFilter: currentFilterName, name: filterName, parameters: Double(intensity!.value))
             DataHolder.sharedInstance.filters.append(filter)
-            filterrepository.create(a: filter)
         }
         DataHolder.sharedInstance.realImage = imageView.image
         collectionView.reloadData()
@@ -84,8 +72,6 @@ class AdjustViewController: UIViewController {
         cancelButton2?.isHidden = true
         addButton?.isHidden = true
         intensity?.isHidden = true
-        
-        print("PARAMETRO!!")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,21 +82,17 @@ class AdjustViewController: UIViewController {
         super.viewDidLoad()
         DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
-        repository = LocalFinishFiltersRepository()
-        filterrepository = LocalFiltersRepository()
-        realImage = DataHolder.sharedInstance.realImage
-        realImage?.imageOrientation == UIImage.Orientation.up
         cancelButton2?.isHidden = true
         addButton?.isHidden = true
         intensity?.isHidden = true
+        FilterList.shared.adjustList = []
         FilterList.shared.editTools()
-        filters = FilterList.shared.editList
     }
     
 }
 extension AdjustViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filters.count
+        return FilterList.shared.adjustList.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -120,108 +102,16 @@ extension AdjustViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: AdjustCell =
             collectionView.dequeueReusableCell(withReuseIdentifier: "adjustCell", for: indexPath) as! AdjustCell
-        let filter = filters[indexPath.row]
+        let filter = FilterList.shared.adjustList[indexPath.row]
         cell.filterName.text = filter.name
         cell.filterimage.image = UIImage(named: filter.name)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentFilterName = filters[indexPath.row].currentFilter
-        filterName = filters[indexPath.row].name
-        intensityPrameter = filters[indexPath.row].parameters
-        isTrue = false
-        
-        if filterName == "Brightness" {
-            intensity.minimumValue = -0.25
-            intensity.maximumValue = 0.25
-            intensity!.value = Float(intensityPrameter)
-            print("Brightness")
-            print(intensity.minimumValue)
-            print(intensity.maximumValue)
-        }
-        if filterName == "Contrast" {
-            intensity.minimumValue = 0.5
-            intensity.maximumValue = 1.5
-            intensity!.value = Float(intensityPrameter)
-            print("CONTRAST")
-            print("MIN", intensity.minimumValue)
-            print("MAX",intensity.maximumValue)
-        }
-        if filterName == "Saturation" {
-            intensity.minimumValue = 0
-            intensity.maximumValue = 2
-            intensity!.value = Float(intensityPrameter)
-            print("Saturation")
-            print(intensity.minimumValue)
-            print(intensity.maximumValue)
-            print(intensity!.value)
-        }
-        if filterName == "CIVibrance" {
-            intensity.minimumValue = -2.5
-            intensity.maximumValue = 2.5
-            intensity!.value = Float(intensityPrameter)
-            print("CIVibrance")
-            print(intensity.minimumValue)
-            print(intensity.maximumValue)
-        }
-        if filterName == "Exposure" {
-            intensity.minimumValue = -1.50
-            intensity.maximumValue = 1.50
-            intensity!.value = Float(intensityPrameter)
-            print("Exposure")
-            print(intensity.minimumValue)
-            print(intensity.maximumValue)
-        }
-        if filterName == "Vignette" {
-            intensity.minimumValue = 0
-            intensity.maximumValue = 3
-            intensity!.value = Float(intensityPrameter)
-            print("Vignette")
-            print(intensity.minimumValue)
-            print(intensity.maximumValue)
-        }
-        if filterName == "Temperature" {
-            intensity.minimumValue = 4000
-            intensity.maximumValue = 25000
-            intensity!.value = Float(intensityPrameter)
-        }
-        if filterName == "CIWhitePointAdjust" {
-            intensity.minimumValue = 0
-            intensity.maximumValue = 1
-            intensity!.value = Float(intensityPrameter)
-        }
-        if filterName == "CINoiseReduction" {
-            intensity.minimumValue = -4.2
-            intensity.maximumValue = 5
-            intensity!.value = Float(intensityPrameter)
-        }
-        if filterName == "CIColorCrossPolynomial" {
-            intensity.minimumValue = 0
-            intensity.maximumValue = 2
-            intensity!.value = Float(intensityPrameter)
-        }
-        
-        position = -1
-        for i in DataHolder.sharedInstance.filters {
-            print("POSITION 1")
-            print(position)
-            position = position + 1
-            if i.name == filterName {
-                position2 = position
-                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: DataHolder.sharedInstance.filters)
-                intensityBefore = i.parameters
-                intensity.value = Float(i.parameters)
-                print("EL PARAMETROOOOOOO")
-                print(i.parameters)
-                isTrue = true
-                print(isTrue)
-            }
-        }
-        if isTrue == false {
-            imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, currentFilter: currentFilterName, parameters: intensityPrameter, name: filterName)
-            print(isTrue)
-        }
+        currentFilterName = FilterList.shared.adjustList[indexPath.row].currentFilter
+        filterName = FilterList.shared.adjustList[indexPath.row].name
+        intensityParameter = FilterList.shared.adjustList[indexPath.row].parameters
         self.tabBarController?.tabBar.isHidden = true
         cancelButton?.isHidden = true
         saveButton?.isHidden = true
@@ -229,5 +119,70 @@ extension AdjustViewController: UICollectionViewDataSource, UICollectionViewDele
         cancelButton2?.isHidden = false
         addButton?.isHidden = false
         intensity?.isHidden = false
+        if filterName == "Brightness" {
+            intensity.minimumValue = -0.25
+            intensity.maximumValue = 0.25
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Contrast" {
+            intensity.minimumValue = 0.5
+            intensity.maximumValue = 1.5
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Saturation" {
+            intensity.minimumValue = 0
+            intensity.maximumValue = 2
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "CIVibrance" {
+            intensity.minimumValue = -2.5
+            intensity.maximumValue = 2.5
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Exposure" {
+            intensity.minimumValue = -1.50
+            intensity.maximumValue = 1.50
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Vignette" {
+            intensity.minimumValue = 0
+            intensity.maximumValue = 3
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Temperature" {
+            intensity.minimumValue = 4000
+            intensity.maximumValue = 25000
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "CIWhitePointAdjust" {
+            intensity.minimumValue = 0
+            intensity.maximumValue = 1
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "Sharpen" {
+            intensity.minimumValue = -4.2
+            intensity.maximumValue = 5
+            intensity!.value = Float(intensityParameter)
+        }
+        if filterName == "CIColorCrossPolynomial" {
+            intensity.minimumValue = 0
+            intensity.maximumValue = 2
+            intensity!.value = Float(intensityParameter)
+        }
+        isTrue = false
+        position = -1
+        for i in DataHolder.sharedInstance.filters {
+            position = position + 1
+            if i.name == filterName {
+                position2 = position
+                imageView.image = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: DataHolder.sharedInstance.filters)
+                intensityBefore = i.parameters
+                intensity.value = Float(i.parameters)
+                isTrue = true
+            }
+        }
+        if isTrue == false {
+            imageView.image = DataHolder.sharedInstance.addEdit(inputImage: DataHolder.sharedInstance.realImage!, currentFilter: currentFilterName, parameters: intensityParameter, name: filterName)
+        }
     }
 }

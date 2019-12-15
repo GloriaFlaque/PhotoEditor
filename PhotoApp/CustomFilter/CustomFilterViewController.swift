@@ -12,17 +12,14 @@ import RealmSwift
 class CustomFilterViewController: UIViewController {
     internal var finishFilters: [FinishFilter] = []
     internal var repository: LocalFinishFiltersRepository!
-    internal var filterrepository: LocalFiltersRepository!
-    var realImage: UIImage?
-    let context = CIContext(options: nil)
     var count: Date!
-    var finishFilters2: FinishFilter! = nil
+    var finishFilter: FinishFilter! = nil
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func deleteFilter(_ sender: Any) {
         if count != nil {
-            repository.delete(a: finishFilters2)
+            repository.delete(a: finishFilter)
             finishFilters = repository.getAll()
             collectionView.reloadData()
         }
@@ -30,6 +27,7 @@ class CustomFilterViewController: UIViewController {
     
     @IBAction func cancelButton(_ sender: Any) {
         performSegue(withIdentifier: "showSelectCustom", sender: self)
+        DataHolder.sharedInstance.filters = []
     }
     
     @IBAction func saveButton(_ sender: Any) {
@@ -41,27 +39,20 @@ class CustomFilterViewController: UIViewController {
         self.repository.create(a: finishFilter)
         finishFilters = repository.getAll()
         collectionView.reloadData()
-        print(DataHolder.sharedInstance.filters)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         imageView.image = DataHolder.sharedInstance.realImage
+        collectionView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         DataHolder.sharedInstance.realImage2 = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage2!)
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.imageOrientation(DataHolder.sharedInstance.realImage!)
-        
         repository = LocalFinishFiltersRepository()
-        filterrepository = LocalFiltersRepository()
-        
         finishFilters = repository.getAll()
-        collectionView.reloadData()
-        
         imageView.image = DataHolder.sharedInstance.realImage
-        realImage = DataHolder.sharedInstance.realImage
     }
 }
 extension CustomFilterViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -88,30 +79,23 @@ extension CustomFilterViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        finishFilters2 = finishFilters[indexPath.row]
-        count = finishFilters2.date
-        /*cell?.layer.borderColor = UIColor.blue.cgColor
-        cell?.layer.borderWidth = 1.5
-        cell?.isSelected = true*/
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderColor = UIColor.black.cgColor
-        cell?.layer.borderWidth = 1.5
-        cell?.isHighlighted = true
+        finishFilter = finishFilters[indexPath.row]
+        count = finishFilter.date
         DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.realImage2
-        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: finishFilters2.filters)
+        DataHolder.sharedInstance.realImage = DataHolder.sharedInstance.addFilter2(inputImage: DataHolder.sharedInstance.realImage2!, customFilter: finishFilter.filters)
         imageView.image = DataHolder.sharedInstance.realImage
         DataHolder.sharedInstance.filters = []
-        for i in finishFilters2.filters {
-            let filter = Filters(id: UUID().uuidString, currentFilter: i.currentFilter, name: i.name, parameters: i.parameters, selected: false)
+        for i in finishFilter.filters {
+            let filter = Filters(id: UUID().uuidString, currentFilter: i.currentFilter, name: i.name, parameters: i.parameters)
             DataHolder.sharedInstance.filters.append(filter)
         }
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.black.cgColor
+        cell?.layer.borderWidth = 6
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        //cell?.layer.borderColor = UIColor.clear.cgColor
         cell?.layer.borderColor = UIColor.clear.cgColor
-        cell?.isHighlighted = false
-        //cell?.isSelected = false
     }
 }

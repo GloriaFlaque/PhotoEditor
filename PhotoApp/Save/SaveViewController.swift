@@ -14,21 +14,15 @@ class SaveViewController: UIViewController {
     @IBAction func cancelButton(_ sender: Any) {
         performSegue(withIdentifier: "showMainBar", sender: self)
     }
+    
     @IBAction func saveButton(_ sender: Any) {
         let imageData = imageView.image!.pngData()
         let compresedImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compresedImage!, nil, nil, nil)
-        
-        /*let alert = UIAlertController(title: "Saved", message: "Your image has been saved", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true,completion: nil)*/
-        
         performSegue(withIdentifier: "showSelect", sender: self)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = DataHolder.sharedInstance.realImage
     }
-
 }

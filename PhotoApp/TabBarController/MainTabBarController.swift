@@ -10,20 +10,7 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    var realImage: UIImage?
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       guard let viewControllers = viewControllers else {
-            return
-        }
-        
-        for viewController in viewControllers {
-            let editorVC = viewController as? FiltersViewController
-            let customFilterVC = viewController as? CustomFilterViewController
-            editorVC?.realImage = realImage
-            customFilterVC?.realImage = realImage
-        }
     }
 }

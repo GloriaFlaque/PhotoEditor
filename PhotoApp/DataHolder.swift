@@ -13,25 +13,21 @@ class DataHolder: NSObject {
     static let sharedInstance:DataHolder = DataHolder()
     var realImage: UIImage?
     var realImage2: UIImage?
-    var originalImg: UIImage?
     var filters: [Filters] = []
-    var actualFinishFilter: [Filters] = []
     
     let context = CIContext(options: nil)
     
     func addFilter(inputImage: UIImage, currentFilter: String, parameters: Double, name: String) -> UIImage? {
         var cimage = CIImage(image: inputImage)
-        
         switch name {
+        case "Original":
+            cimage = CIImage(image: realImage2!)
         case "Sepia":
-            print("Sepia")
-            print(parameters)
             cimage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
                     kCIInputIntensityKey: parameters
                 ])
-            
         case "Morphology":
             cimage = cimage!.applyingFilter(
                 "CIMorphologyGradient",
@@ -77,8 +73,6 @@ class DataHolder: NSObject {
             let name = i.name
         switch name {
         case "Sepia":
-            print("Sepia creado")
-            print(parameters!)
             cimage = cimage!.applyingFilter(
                 "CISepiaTone",
                 parameters: [
@@ -134,8 +128,6 @@ class DataHolder: NSObject {
             ])
         
         case "Saturation":
-            print("saturation")
-            print(parameters!)
         cimage = cimage!.applyingFilter(
             "CIColorControls",
             parameters: [
@@ -202,7 +194,7 @@ class DataHolder: NSObject {
                     "inputRedCoefficients": CIVector (x: 0, y: 1, z: 0, w: 0),
                 ])
             
-        case "CINoiseReduction":
+        case "Sharpen":
             cimage = cimage!.applyingFilter(
                 "CINoiseReduction",
                 parameters: [
@@ -269,8 +261,6 @@ class DataHolder: NSObject {
             ])
             
         case "Vignette":
-            print("VignetteEdit")
-            print(parameters)
             cimage = cimage!.applyingFilter(
                 "CIVignette",
                 parameters: [
@@ -317,7 +307,7 @@ class DataHolder: NSObject {
                     "inputRedCoefficients": CIVector (x: 0, y: 1, z: 0, w: 0),
                 ])
         
-        case "CINoiseReduction":
+        case "Sharpen":
             cimage = cimage!.applyingFilter(
                 "CINoiseReduction",
                 parameters: [
